@@ -13,24 +13,37 @@ document.addEventListener('DOMContentLoaded', function() {
         // Données des projets
         projects: {
             data: [
-                // PROJET STAGE OOREDOO (NOUVEAU)
+                // PROJET STAGE OOREDOO (MISE À JOUR)
                 {
-                    title: "Portail Web Décisionnel - Ooredoo Tunisie",
-                    description: "Développement d'un portail web décisionnel intégrant des tableaux de bord interactifs Power BI pour l'analyse des données commerciales.",
-                    technologies: ["PHP", "MVC", "Power BI", "Talend", "ETL", "Data Warehouse", "MySQL", "Authentification", "Schéma en étoile", "Sécurité"],
-                    details: "Projet de stage réalisé chez Ooredoo Tunisie de Février 2026 à Mai 2026. Développement d'un portail web décisionnel complet permettant aux gestionnaires d'accéder à des analyses de données avancées.\n\n" +
+                    title: "Plateforme Décisionnelle - Ooredoo Tunisie",
+                    description: "Développement d'une plateforme web décisionnelle sécurisée intégrant Power BI, ETL Talend, Data Warehouse PostgreSQL et modèle de prédiction XGBoost.",
+                    technologies: ["React.js", "Node.js", "Power BI", "Talend", "PostgreSQL", "ETL", "XGBoost", "JWT", "RBAC"],
+                    details: "Projet de stage réalisé chez Ooredoo Tunisie de Février 2026 à Mai 2026.\n\n" +
+                             "🔹 **Contexte** : Conception d'une plateforme décisionnelle end‑to‑end pour centraliser, analyser et prédire les données métiers.\n\n" +
                              "🔹 **Réalisations techniques :**\n" +
-                             "• Conception et développement d'une application web en PHP suivant l'architecture MVC\n" +
-                             "• Intégration de tableaux de bord interactifs Power BI pour l'analyse en temps réel des données commerciales\n" +
-                             "• Mise en place d'un processus ETL complet avec Talend (extraction, nettoyage, transformation et chargement des données)\n" +
-                             "• Modélisation d'un Data Warehouse selon un schéma en étoile pour optimiser les requêtes analytiques\n" +
-                             "• Implémentation de fonctionnalités de sécurité avancées (authentification, gestion des rôles et permissions)\n" +
-                             "• Analyse approfondie des données pour faciliter la prise de décision stratégique\n\n" +
+                             "• Développement d'une application web avec React.js (frontend) et Node.js (backend)\n" +
+                             "• Intégration de dashboards interactifs Power BI pour le suivi en temps réel\n" +
+                             "• Mise en place d'un processus ETL avec Talend (extraction, nettoyage, transformation, chargement)\n" +
+                             "• Modélisation d'un Data Warehouse sous PostgreSQL (schéma en étoile)\n" +
+                             "• Système d'authentification sécurisé (OTP + JWT) et contrôle d'accès RBAC\n" +
+                             "• Implémentation d'un modèle XGBoost pour prédire le total des interventions et des abonnements\n" +
+                             "• Analyse des données et suivi des KPI métiers pour le support à la décision\n\n" +
                              "🔹 **Résultats :**\n" +
-                             "• Portail web performant utilisé par plusieurs départements\n" +
+                             "• Plateforme utilisée par plusieurs départements pour le pilotage de la performance\n" +
                              "• Réduction du temps d'accès aux rapports de 70%\n" +
-                             "• Tableaux de bord interactifs permettant une visualisation intuitive des KPI\n" +
-                             "• Processus ETL automatisé garantissant la fraîcheur des données"
+                             "• Prédictions fiables pour anticiper les ressources nécessaires"
+                },
+                // PROJET CODEALPHA (NOUVEAU)
+                {
+                    title: "Dashboards Power BI — CodeAlpha",
+                    description: "Réalisation de quatre tableaux de bord interactifs (Finance, RH, Immobilier, Éducation) avec Power BI, incluant le nettoyage des données, la création de KPI et l'analyse d'insights.",
+                    technologies: ["Power BI", "Power Query", "DAX", "Data Visualization", "KPI", "Data Storytelling"],
+                    details: "Dans le cadre du stage chez CodeAlpha (Juillet 2026), j'ai développé quatre dashboards complets :\n\n" +
+                             "🔹 **Dashboard Finance** : suivi des revenus, dépenses et rentabilité avec analyse comparative.\n" +
+                             "🔹 **Dashboard RH** : indicateurs sur le turnover, l'absentéisme et la productivité.\n" +
+                             "🔹 **Dashboard Immobilier** : analyse des prix, des surfaces et des tendances du marché.\n" +
+                             "🔹 **Dashboard Éducation** : suivi des performances académiques et des taux de réussite.\n\n" +
+                             "Chaque dashboard intègre des filtres dynamiques, des mesures DAX personnalisées et une interface intuitive pour faciliter la prise de décision."
                 },
                 {
                     title: "Projet Power BI — Analyse décisionnelle",
@@ -77,6 +90,44 @@ document.addEventListener('DOMContentLoaded', function() {
                     description: "Création de scripts pour l'automatisation de tâches et l'analyse de données.",
                     technologies: ["Python", "Pandas", "NumPy", "Matplotlib", "Automation"],
                     details: "Collection de scripts Python pour automatiser des tâches répétitives et analyser des jeux de données. Inclut le nettoyage de données, l'analyse statistique et la génération de rapports automatisés. Les scripts utilisent Pandas pour la manipulation des données, NumPy pour les calculs numériques, et Matplotlib pour la visualisation. Un des scripts automatisés génère des rapports PDF quotidiens à partir de données Excel."
+                },
+                // ========== NOUVEAU PROJET AJOUTÉ ICI ==========
+                {
+                    title: "Retail Sales & Inventory Analytics Dashboard | Power BI",
+                    description: "Dashboard interactif Power BI pour analyser les performances des ventes, les niveaux de stock, les tendances produits, les fournisseurs et les performances régionales.",
+                    technologies: ["Power BI", "Power Query", "DAX", "Python", "Data Visualization", "Business Intelligence"],
+                    details: "🚀 **Présentation du projet**\n\n" +
+                             "Ce projet vise à transformer des données brutes de vente et d'inventaire en insights métiers exploitables à travers un tableau de bord interactif Power BI.\n\n" +
+                             "🎯 **Objectifs**\n" +
+                             "• Analyser les performances globales des ventes\n" +
+                             "• Surveiller le chiffre d'affaires et le profit\n" +
+                             "• Identifier les produits les plus performants\n" +
+                             "• Analyser les ventes par catégorie et par région\n" +
+                             "• Surveiller les niveaux de stock et identifier les produits en rupture\n" +
+                             "• Analyser les performances des fournisseurs\n" +
+                             "• Soutenir la prise de décision basée sur les données\n\n" +
+                             "🛠️ **Technologies utilisées**\n" +
+                             "• Microsoft Power BI\n" +
+                             "• Power Query\n" +
+                             "• DAX\n" +
+                             "• Python (pour le nettoyage et la transformation)\n" +
+                             "• Data Visualization & Business Intelligence\n\n" +
+                             "📌 **Indicateurs clés (KPI)**\n" +
+                             "• Total des ventes, chiffre d'affaires, profit, quantité vendue\n" +
+                             "• Valeur moyenne des commandes\n" +
+                             "• Quantité en stock, nombre de produits, nombre de fournisseurs\n\n" +
+                             "📊 **Fonctionnalités du dashboard**\n" +
+                             "🔹 **Aperçu des ventes** : analyse des revenus, tendances, profit, ventes par catégorie et produit, performance régionale.\n" +
+                             "🔹 **Analyse produit** : produits les plus vendus, performance par catégorie, quantités vendues.\n" +
+                             "🔹 **Analyse des stocks** : niveaux actuels, produits en stock faible, distribution par catégorie.\n" +
+                             "🔹 **Analyse fournisseurs** : performance, achats par fournisseur, répartition régionale.\n\n" +
+                             "🔍 **Insights clés**\n" +
+                             "• Quels produits génèrent le plus de revenus ?\n" +
+                             "• Quelles catégories sont les plus performantes ?\n" +
+                             "• Quelles régions sont les plus actives ?\n" +
+                             "• Quels produits nécessitent une attention particulière sur les stocks ?\n" +
+                             "• Quels fournisseurs contribuent le plus aux achats ?\n" +
+                             "• Comment les ventes et les stocks évoluent-ils dans le temps ?"
                 }
             ],
             autres: [
@@ -626,7 +677,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Log d'initialisation
         console.log('Portfolio de Hazem Khaled initialisé avec succès!');
-        console.log('Contact: hazemhazem9089@gmail.com | LinkedIn: linkedin.com/in/khaled-hazem-9a323532a');
+        console.log('Contact: hazemhazem9089@gmail.com | LinkedIn: linkedin.com/in/hazem-khaled-data');
     }
     
     // Démarrer l'application
