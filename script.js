@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Données des projets
         projects: {
             data: [
-                // PROJET STAGE OOREDOO (MISE À JOUR)
+                // PROJET STAGE OOREDOO
                 {
                     title: "Plateforme Décisionnelle - Ooredoo Tunisie",
                     description: "Développement d'une plateforme web décisionnelle sécurisée intégrant Power BI, ETL Talend, Data Warehouse PostgreSQL et modèle de prédiction XGBoost.",
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                              "• Réduction du temps d'accès aux rapports de 70%\n" +
                              "• Prédictions fiables pour anticiper les ressources nécessaires"
                 },
-                // PROJET CODEALPHA (NOUVEAU)
+                // PROJET CODEALPHA
                 {
                     title: "Dashboards Power BI — CodeAlpha",
                     description: "Réalisation de quatre tableaux de bord interactifs (Finance, RH, Immobilier, Éducation) avec Power BI, incluant le nettoyage des données, la création de KPI et l'analyse d'insights.",
@@ -44,6 +44,49 @@ document.addEventListener('DOMContentLoaded', function() {
                              "🔹 **Dashboard Immobilier** : analyse des prix, des surfaces et des tendances du marché.\n" +
                              "🔹 **Dashboard Éducation** : suivi des performances académiques et des taux de réussite.\n\n" +
                              "Chaque dashboard intègre des filtres dynamiques, des mesures DAX personnalisées et une interface intuitive pour faciliter la prise de décision."
+                },
+                // PROJET SAIKET SYSTEMS
+                {
+                    title: "Business Analytics & Churn Analysis — Saiket Systems",
+                    description: "Analyse de données métier, analyse de l'attrition client et développement de tableaux de bord Power BI pour le suivi des performances.",
+                    technologies: ["Python", "Pandas", "NumPy", "Power BI", "DAX", "Data Visualization", "Business Analysis"],
+                    details: "💼 **Stage Business Analyst Intern — Saiket Systems**\n" +
+                             "Juillet 2026 – Août 2026\n\n" +
+                             "🔹 **Contexte** : Durant ce stage chez Saiket Systems, j'ai travaillé sur des projets concrets d'analyse métier et de data analytics, en transformant des données brutes en insights pertinents et en recommandations exploitables.\n\n" +
+                             "🔹 **Missions réalisées :**\n" +
+                             "• Analyse de jeux de données métier pour identifier les tendances, les modèles et les indicateurs de performance\n" +
+                             "• Nettoyage, transformation et analyse exploratoire des données avec Python (Pandas, NumPy)\n" +
+                             "• Développement de dashboards interactifs Power BI pour le suivi des KPI et la prise de décision\n" +
+                             "• Réalisation d’une analyse de l’attrition client (churn analysis) pour identifier les facteurs influençant la rétention et la perte de clients\n" +
+                             "• Création de visualisations pour communiquer des insights complexes de manière claire et efficace\n" +
+                             "• Traduction des résultats analytiques en recommandations commerciales exploitables\n" +
+                             "• Documentation des résultats des projets et présentation professionnelle des conclusions\n\n" +
+                             "🎯 **Objectif principal** : Renforcer ma capacité à faire le pont entre les besoins métier et les données, en utilisant des outils d'analyse et des techniques de visualisation pour aider les organisations à prendre de meilleures décisions basées sur les données."
+                },
+                // NOUVEAU PROJET : Customer Churn Analytics in Telecom
+                {
+                    title: "Customer Churn Analytics in Telecom",
+                    description: "Analyse complète du churn client dans le secteur des télécoms : nettoyage Python, ETL Talend, Data Warehouse PostgreSQL et dashboard Power BI.",
+                    technologies: ["Python", "Pandas", "NumPy", "Talend", "PostgreSQL", "Power BI", "DAX", "ETL", "Data Visualization"],
+                    details: "🎉 **Projet : Analytique du churn client dans les télécommunications**\n\n" +
+                             "Ce projet m’a fait découvrir tout le flux de travail de l’analyse de données — des données brutes aux insights métier exploitables.\n\n" +
+                             "🔹 **Étapes du projet :**\n" +
+                             "🐍 **Nettoyage et prétraitement** : J’ai commencé par nettoyer, prétraiter et valider les données en Python (Pandas, NumPy) pour garantir une base solide et fiable.\n" +
+                             "🔄 **ETL et intégration** : Ensuite, j’ai utilisé Talend Open Studio pour les processus ETL et l’intégration des données.\n" +
+                             "🗄️ **Data Warehouse** : Les données étaient structurées et modélisées en entrepôt de données à l’aide de PostgreSQL.\n" +
+                             "📈 **Dashboard Power BI** : Enfin, j’ai construit un tableau de bord complet Power BI avec des mesures DAX pour une analyse et une visualisation plus approfondies.\n\n" +
+                             "🎯 **Objectifs :**\n" +
+                             "• Comprendre le comportement des clients\n" +
+                             "• Identifier les principaux facteurs derrière le churn\n" +
+                             "• Repérer les profils clients à haut risque\n" +
+                             "• Évaluer les revenus à risque afin de soutenir des stratégies de rétention plus intelligentes\n\n" +
+                             "📊 **Vues analytiques du dashboard :**\n" +
+                             "✅ Aperçu global des performances\n" +
+                             "✅ Analyse du battage (churn)\n" +
+                             "✅ Segmentation client\n" +
+                             "✅ Analyse des revenus\n" +
+                             "✅ Informations sur l’utilisation des services\n\n" +
+                             "🔍 **Technologies utilisées :** Python, Pandas, NumPy, Talend, PostgreSQL, Power BI, DAX, ETL."
                 },
                 {
                     title: "Projet Power BI — Analyse décisionnelle",
@@ -91,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     technologies: ["Python", "Pandas", "NumPy", "Matplotlib", "Automation"],
                     details: "Collection de scripts Python pour automatiser des tâches répétitives et analyser des jeux de données. Inclut le nettoyage de données, l'analyse statistique et la génération de rapports automatisés. Les scripts utilisent Pandas pour la manipulation des données, NumPy pour les calculs numériques, et Matplotlib pour la visualisation. Un des scripts automatisés génère des rapports PDF quotidiens à partir de données Excel."
                 },
-                // ========== NOUVEAU PROJET AJOUTÉ ICI ==========
                 {
                     title: "Retail Sales & Inventory Analytics Dashboard | Power BI",
                     description: "Dashboard interactif Power BI pour analyser les performances des ventes, les niveaux de stock, les tendances produits, les fournisseurs et les performances régionales.",
