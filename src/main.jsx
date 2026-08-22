@@ -1,0 +1,73 @@
+import { StrictMode, useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ArrowUpRight, Mail, Menu, MapPin, Phone, Play, X } from 'lucide-react';
+import '../style.css';
+
+const experiences = [
+  { period: 'Fév. 2026 — Mai 2026', title: 'Stage en Business Intelligence', company: 'Ooredoo Tunisie', place: 'Tunis, Tunisie', text: 'Plateforme décisionnelle sécurisée de bout en bout avec React.js, Node.js, Power BI, Talend et PostgreSQL. Conception du Data Warehouse, RBAC/JWT et modèle XGBoost pour la prédiction des KPI métiers.' },
+  { period: 'Juil. 2026', title: 'Stage Business Intelligence', company: 'CodeAlpha', place: 'Tunisie · Télétravail', text: 'Création de quatre dashboards Power BI pour la Finance, les RH, l’Immobilier et l’Éducation, de la préparation Power Query au storytelling des insights.' },
+  { period: 'Juil. 2026 — Août 2026', title: 'Business Analyst Intern', company: 'Saiket Systems', place: 'Télétravail · Inde', text: 'Analyse exploratoire avec Python, étude du churn client, suivi des KPI et traduction des résultats analytiques en recommandations commerciales exploitables.' },
+  { period: 'Juil.2025  — Août 2025', title: 'Stage en développement web', company: 'Librairie Sagesse', place: 'Médenine, Tunisie', text: 'Développement d’une application de gestion en PHP, HTML, CSS et JavaScript, connectée à MySQL avec opérations CRUD.' },
+];
+
+const projects = {
+  data: [
+    { title: 'Plateforme décisionnelle', meta: 'Ooredoo Tunisie', description: 'Solution web sécurisée intégrant Power BI, ETL Talend, Data Warehouse PostgreSQL et prédiction XGBoost.', tags: ['React.js', 'Node.js', 'Power BI', 'PostgreSQL'] },
+    { title: 'Retail Sales & Inventory Analytics', meta: 'Projet personnel', description: 'Dashboard Power BI pour les ventes, stocks, produits, fournisseurs et performances régionales.', tags: ['Power BI', 'Power Query', 'DAX', 'Python'], video: 'Retail Sales & Inventory Analytics Dashboard  Power BI.mp4' },
+    { title: 'Telecom Churn & Retention Analytics', meta: 'Projet data', description: 'Analyse du churn télécom avec nettoyage Python, ETL, entrepôt de données et dashboard décisionnel.', tags: ['Python', 'Talend', 'PostgreSQL', 'Power BI'], video: '📡 Telecom Customer Churn Analytics.mp4' },
+    { title: 'Banking Fraud Detection Platform', meta: 'Projet data', description: 'Plateforme full-stack de suivi des transactions et du risque de fraude pour une banque digitale simulée.', tags: ['Angular', 'Node.js', 'Python', 'REST API'], video: 'Banking Customer Analytics & Fraud Detection.mp4' },
+  ],
+  academiques: [
+    { title: 'Analyse décisionnelle Power BI', meta: 'Projet académique', description: 'Tableaux de bord interactifs avec KPI, tendances et comparaisons pour faciliter la décision.', tags: ['Power BI', 'DAX', 'Data Modeling'] },
+    { title: 'Application de gestion des employés', meta: 'Projet académique', description: 'Application PHP MVC avec authentification, CRUD via PDO et interface dynamique.', tags: ['PHP', 'MySQL', 'MVC', 'PDO'] },
+    { title: 'Mini-projet Java & MySQL', meta: 'Projet académique', description: 'Application CRUD de gestion de données clients avec interface graphique et JDBC.', tags: ['Java', 'MySQL', 'Swing', 'JDBC'] },
+    { title: 'Automatisation & analyse Python', meta: 'Projet académique', description: 'Scripts d’automatisation et analyse de données avec les bibliothèques Python.', tags: ['Python', 'Pandas', 'NumPy', 'Matplotlib'] },
+  ],
+  personnels: [
+    { title: 'Retail Sales & Inventory Analytics', meta: 'Projet personnel', description: 'Dashboard interactif pour comprendre ventes, stock, fournisseurs et tendances produits.', tags: ['Power BI', 'DAX', 'Python'], video: 'Retail Sales & Inventory Analytics Dashboard  Power BI.mp4' },
+    { title: 'Telecom Churn Analytics', meta: 'Projet personnel', description: 'De la préparation des données à la visualisation des facteurs d’attrition client.', tags: ['Python', 'ETL', 'Power BI'], video: '📡 Telecom Customer Churn Analytics.mp4' },
+    { title: 'Banking Analytics Platform', meta: 'Projet personnel', description: 'Suivi analytique des clients, transactions et risques pour une banque digitale simulée.', tags: ['Angular', 'Node.js', 'Python'], video: 'Banking Customer Analytics & Fraud Detection.mp4' },
+  ],
+};
+
+const skillGroups = [
+  ['Langages', ['SQL', 'Python', 'Java', 'PHP', 'HTML', 'CSS', 'JavaScript', 'TypeScript']],
+  ['BI & Data', ['Power BI', 'Excel 2019 certifié', 'MySQL', 'PostgreSQL', 'SQL Server', 'Talend', 'ETL', 'Data Warehouse']],
+  ['Développement', ['React.js', 'Node.js', 'Angular', 'Git', 'GitHub', 'Docker', 'XGBoost', 'Pandas', 'NumPy']],
+  ['Soft skills & langues', ['Arabe · maternelle', 'Français · courant', 'Anglais · intermédiaire', 'Communication', 'Travail d’équipe', 'Modélisation de données']],
+];
+
+const skillLogos = {
+  SQL: '/Image/sql.png', Python: '/Image/python.jpg', Java: '/Image/java.png', PHP: '/Image/php.png',
+  'HTML': '/Image/html.png', 'MySQL': '/Image/mysql.png', 'Power BI': '/Image/powerbi.jpg',
+  Excel: '/Image/excel.jpg',
+};
+
+function SkillTag({ item }) {
+  const logoKey = Object.keys(skillLogos).find((key) => item.startsWith(key));
+  return <span className="skill-tag">{logoKey && <img src={skillLogos[logoKey]} alt="" aria-hidden="true" />}{item}</span>;
+}
+
+function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('data');
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [videoProject, setVideoProject] = useState(null);
+  const closeMenu = () => setMenuOpen(false);
+  const closeModals = () => { setSelectedProject(null); setVideoProject(null); };
+  return <>
+    <header className="topbar"><a className="brand" href="#accueil">HK<span>.</span></a><nav className={menuOpen ? 'nav open' : 'nav'}>{[['accueil', 'Accueil'], ['profil', 'Profil'], ['experience', 'Expérience'], ['projets', 'Projets'], ['competences', 'Compétences']].map(([id, label]) => <a key={id} href={`#${id}`} onClick={closeMenu}>{label}</a>)}</nav><button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Ouvrir le menu">{menuOpen ? <X size={22} /> : <Menu size={22} />}</button></header>
+    <main>
+      <section className="hero" id="accueil"><div className="hero-copy"><p className="eyebrow">PORTFOLIO · DATA & BUSINESS INTELLIGENCE</p><h1>Hazem<br /><em>Khaled</em></h1><p className="hero-lead">Je transforme les données complexes en décisions claires et en produits utiles.</p><div className="hero-actions"><a className="button button-primary" href="#projets">Explorer mes projets <ArrowUpRight size={17} /></a><a className="button button-quiet" href="mailto:hazemhazem9089@gmail.com">Me contacter <Mail size={17} /></a></div><div className="contact-row"><span><MapPin size={15} /> Médenine, Tunisie</span><span><Mail size={15} /> hazemhazem9089@gmail.com</span></div></div><div className="hero-visual"><div className="portrait-frame"><img src="/Image/hazem.png" alt="Portrait de Hazem Khaled" /></div><div className="orbit-note"><span className="status-dot" /> Disponible pour une opportunité</div><div className="hero-index">01 <span>/ 04</span></div></div></section>
+      <section className="intro section" id="profil"><div className="section-kicker">01 — À PROPOS</div><div className="intro-grid"><h2>Un regard analytique,<br /><span>une approche concrète.</span></h2><div><p>Étudiant en Informatique de Gestion, spécialisé en Business Intelligence, SQL, Power BI et Excel. J’aime relier la technique aux enjeux réels d’une organisation.</p><p>Mon objectif : concevoir des solutions data fiables, lisibles et directement utiles à la prise de décision.</p><div className="metrics"><div><strong>04</strong><span>expériences</span></div><div><strong>15+</strong><span>technologies</span></div><div><strong>2026</strong><span>année de spécialisation</span></div></div></div></div></section>
+      <section className="experience section" id="experience"><div className="section-kicker">02 — PARCOURS</div><div className="section-heading"><h2>Expérience</h2><p>Des missions à l’intersection de la donnée, du produit et du métier.</p></div><div className="experience-list">{experiences.map((item, index) => <article className="experience-item" key={item.company}><span className="experience-number">0{index + 1}</span><div className="experience-period">{item.period}</div><div className="experience-content"><h3>{item.title}</h3><p className="company">{item.company} <span>· {item.place}</span></p><p>{item.text}</p></div></article>)}</div></section>
+      <section className="projects section" id="projets"><div className="section-kicker">03 — SÉLECTION</div><div className="section-heading"><h2>Projets</h2><p>Quelques cas où la donnée devient une histoire compréhensible.</p></div><div className="tabs" role="tablist">{[['data', 'Data'], ['academiques', 'Académiques'], ['personnels', 'Personnels']].map(([id, label]) => <button key={id} className={activeTab === id ? 'active' : ''} onClick={() => setActiveTab(id)} role="tab" aria-selected={activeTab === id}>{label}</button>)}</div><div className="project-grid">{projects[activeTab].map((project, index) => <article className={`project-card ${index === 0 ? 'featured' : ''}`} key={project.title}><div className="project-top"><span>0{index + 1}</span><ArrowUpRight size={19} /></div><p className="project-meta">{project.meta}</p><h3>{project.title}</h3><p>{project.description}</p><div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><div className="project-actions"><button className="project-action" onClick={() => setSelectedProject(project)}>Voir plus <ArrowUpRight size={15} /></button>{project.video && <button className="project-action project-action-video" onClick={() => setVideoProject(project)}><Play size={14} /> Voir la vidéo</button>}</div></article>)}</div></section>
+      <section className="skills section" id="competences"><div className="section-kicker">04 — EXPERTISE</div><div className="section-heading"><h2>Compétences</h2><p>Une boîte à outils pensée pour passer de la donnée brute à l’insight.</p></div><div className="skills-grid">{skillGroups.map(([title, items]) => <article className="skill-group" key={title}><h3>{title}</h3><div className="tags">{items.map(item => <SkillTag item={item} key={item} />)}</div></article>)}</div></section>
+      <section className="education section"><div className="education-copy"><div className="section-kicker">FORMATION</div><h2>Construire le socle<br /><em>pour aller plus loin.</em></h2></div><div className="education-list"><div><span>2023 — 2026</span><h3>Licence en Informatique de Gestion</h3><p>Spécialité Business Intelligence · FSEGN, Nabeul</p></div><div><span>2023</span><h3>Baccalauréat en Économie et Gestion</h3><p>Lycée Abou El Kassem El Chebbi, Médenine</p></div></div></section>
+    </main>
+    <footer><div><a className="brand" href="#accueil">HK<span>.</span></a><p>Data Analyst Junior · Business Intelligence</p></div><div className="footer-links"><a href="https://www.linkedin.com/in/hazem-khaled-data/" target="_blank" rel="noreferrer"><span className="linkedin-mark">in</span> LinkedIn</a><a href="mailto:hazemhazem9089@gmail.com"><Mail size={18} /> Email</a><a href="tel:+21652416031"><Phone size={18} /> Téléphone</a></div><small>© {new Date().getFullYear()} Hazem Khaled</small></footer>
+    {(selectedProject || videoProject) && <div className="modal-backdrop" onClick={closeModals}><div className="project-modal" role="dialog" aria-modal="true" aria-label={videoProject ? `Vidéo ${videoProject.title}` : `Détails ${selectedProject.title}`} onClick={(event) => event.stopPropagation()}><button className="modal-close" onClick={closeModals} aria-label="Fermer"><X size={20} /></button>{videoProject ? <><p className="section-kicker">DÉMONSTRATION VIDÉO</p><h2>{videoProject.title}</h2><video className="project-video" controls autoPlay src={`/videos/${encodeURIComponent(videoProject.video)}`} /></> : <><p className="section-kicker">DÉTAILS DU PROJET</p><h2>{selectedProject.title}</h2><p className="project-modal-meta">{selectedProject.meta}</p><p>{selectedProject.description}</p><div className="tags">{selectedProject.tags.map(tag => <span key={tag}>{tag}</span>)}</div>{selectedProject.video && <button className="button button-primary modal-video-button" onClick={() => { setVideoProject(selectedProject); setSelectedProject(null); }}><Play size={16} /> Voir la vidéo</button>}</>}</div></div>}
+  </>;
+}
+
+createRoot(document.getElementById('root')).render(<StrictMode><App /></StrictMode>);

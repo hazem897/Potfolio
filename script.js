@@ -2,210 +2,17 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    // ========== CONFIGURATION ==========
-    const config = {
-        // Animation au scroll
-        scrollAnimation: {
-            enabled: true,
-            offset: 100
-        },
-        
-        // Données des projets
-        projects: {
-            data: [
-                // PROJET STAGE OOREDOO
-                {
-                    title: "Plateforme Décisionnelle - Ooredoo Tunisie",
-                    description: "Développement d'une plateforme web décisionnelle sécurisée intégrant Power BI, ETL Talend, Data Warehouse PostgreSQL et modèle de prédiction XGBoost.",
-                    technologies: ["React.js", "Node.js", "Power BI", "Talend", "PostgreSQL", "ETL", "XGBoost", "JWT", "RBAC"],
-                    details: "Projet de stage réalisé chez Ooredoo Tunisie de Février 2026 à Mai 2026.\n\n" +
-                             "🔹 **Contexte** : Conception d'une plateforme décisionnelle end‑to‑end pour centraliser, analyser et prédire les données métiers.\n\n" +
-                             "🔹 **Réalisations techniques :**\n" +
-                             "• Développement d'une application web avec React.js (frontend) et Node.js (backend)\n" +
-                             "• Intégration de dashboards interactifs Power BI pour le suivi en temps réel\n" +
-                             "• Mise en place d'un processus ETL avec Talend (extraction, nettoyage, transformation, chargement)\n" +
-                             "• Modélisation d'un Data Warehouse sous PostgreSQL (schéma en étoile)\n" +
-                             "• Système d'authentification sécurisé (OTP + JWT) et contrôle d'accès RBAC\n" +
-                             "• Implémentation d'un modèle XGBoost pour prédire le total des interventions et des abonnements\n" +
-                             "• Analyse des données et suivi des KPI métiers pour le support à la décision\n\n" +
-                             "🔹 **Résultats :**\n" +
-                             "• Plateforme utilisée par plusieurs départements pour le pilotage de la performance\n" +
-                             "• Réduction du temps d'accès aux rapports de 70%\n" +
-                             "• Prédictions fiables pour anticiper les ressources nécessaires"
-                },
-                // PROJET CODEALPHA
-                {
-                    title: "Dashboards Power BI — CodeAlpha",
-                    description: "Réalisation de quatre tableaux de bord interactifs (Finance, RH, Immobilier, Éducation) avec Power BI, incluant le nettoyage des données, la création de KPI et l'analyse d'insights.",
-                    technologies: ["Power BI", "Power Query", "DAX", "Data Visualization", "KPI", "Data Storytelling"],
-                    details: "Dans le cadre du stage chez CodeAlpha (Juillet 2026), j'ai développé quatre dashboards complets :\n\n" +
-                             "🔹 **Dashboard Finance** : suivi des revenus, dépenses et rentabilité avec analyse comparative.\n" +
-                             "🔹 **Dashboard RH** : indicateurs sur le turnover, l'absentéisme et la productivité.\n" +
-                             "🔹 **Dashboard Immobilier** : analyse des prix, des surfaces et des tendances du marché.\n" +
-                             "🔹 **Dashboard Éducation** : suivi des performances académiques et des taux de réussite.\n\n" +
-                             "Chaque dashboard intègre des filtres dynamiques, des mesures DAX personnalisées et une interface intuitive pour faciliter la prise de décision."
-                },
-                // PROJET SAIKET SYSTEMS
-                {
-                    title: "Business Analytics & Churn Analysis — Saiket Systems",
-                    description: "Analyse de données métier, analyse de l'attrition client et développement de tableaux de bord Power BI pour le suivi des performances.",
-                    technologies: ["Python", "Pandas", "NumPy", "Power BI", "DAX", "Data Visualization", "Business Analysis"],
-                    details: "💼 **Stage Business Analyst Intern — Saiket Systems**\n" +
-                             "Juillet 2026 – Août 2026\n\n" +
-                             "🔹 **Contexte** : Durant ce stage chez Saiket Systems, j'ai travaillé sur des projets concrets d'analyse métier et de data analytics, en transformant des données brutes en insights pertinents et en recommandations exploitables.\n\n" +
-                             "🔹 **Missions réalisées :**\n" +
-                             "• Analyse de jeux de données métier pour identifier les tendances, les modèles et les indicateurs de performance\n" +
-                             "• Nettoyage, transformation et analyse exploratoire des données avec Python (Pandas, NumPy)\n" +
-                             "• Développement de dashboards interactifs Power BI pour le suivi des KPI et la prise de décision\n" +
-                             "• Réalisation d’une analyse de l’attrition client (churn analysis) pour identifier les facteurs influençant la rétention et la perte de clients\n" +
-                             "• Création de visualisations pour communiquer des insights complexes de manière claire et efficace\n" +
-                             "• Traduction des résultats analytiques en recommandations commerciales exploitables\n" +
-                             "• Documentation des résultats des projets et présentation professionnelle des conclusions\n\n" +
-                             "🎯 **Objectif principal** : Renforcer ma capacité à faire le pont entre les besoins métier et les données, en utilisant des outils d'analyse et des techniques de visualisation pour aider les organisations à prendre de meilleures décisions basées sur les données."
-                },
-                // NOUVEAU PROJET : Customer Churn Analytics in Telecom
-                {
-                    title: "Customer Churn Analytics in Telecom",
-                    description: "Analyse complète du churn client dans le secteur des télécoms : nettoyage Python, ETL Talend, Data Warehouse PostgreSQL et dashboard Power BI.",
-                    technologies: ["Python", "Pandas", "NumPy", "Talend", "PostgreSQL", "Power BI", "DAX", "ETL", "Data Visualization"],
-                    details: "🎉 **Projet : Analytique du churn client dans les télécommunications**\n\n" +
-                             "Ce projet m’a fait découvrir tout le flux de travail de l’analyse de données — des données brutes aux insights métier exploitables.\n\n" +
-                             "🔹 **Étapes du projet :**\n" +
-                             "🐍 **Nettoyage et prétraitement** : J’ai commencé par nettoyer, prétraiter et valider les données en Python (Pandas, NumPy) pour garantir une base solide et fiable.\n" +
-                             "🔄 **ETL et intégration** : Ensuite, j’ai utilisé Talend Open Studio pour les processus ETL et l’intégration des données.\n" +
-                             "🗄️ **Data Warehouse** : Les données étaient structurées et modélisées en entrepôt de données à l’aide de PostgreSQL.\n" +
-                             "📈 **Dashboard Power BI** : Enfin, j’ai construit un tableau de bord complet Power BI avec des mesures DAX pour une analyse et une visualisation plus approfondies.\n\n" +
-                             "🎯 **Objectifs :**\n" +
-                             "• Comprendre le comportement des clients\n" +
-                             "• Identifier les principaux facteurs derrière le churn\n" +
-                             "• Repérer les profils clients à haut risque\n" +
-                             "• Évaluer les revenus à risque afin de soutenir des stratégies de rétention plus intelligentes\n\n" +
-                             "📊 **Vues analytiques du dashboard :**\n" +
-                             "✅ Aperçu global des performances\n" +
-                             "✅ Analyse du battage (churn)\n" +
-                             "✅ Segmentation client\n" +
-                             "✅ Analyse des revenus\n" +
-                             "✅ Informations sur l’utilisation des services\n\n" +
-                             "🔍 **Technologies utilisées :** Python, Pandas, NumPy, Talend, PostgreSQL, Power BI, DAX, ETL."
-                },
-                {
-                    title: "Projet Power BI — Analyse décisionnelle",
-                    description: "Création de tableaux de bord interactifs avec KPI, tendances et comparaisons pour aider à la prise de décision via des visualisations dynamiques.",
-                    technologies: ["Power BI", "Data Visualization", "KPI", "Data Cleaning", "DAX", "Data Modeling"],
-                    details: "Ce projet Power BI comprend le nettoyage, la préparation et la structuration des données. J'ai créé des tableaux de bord interactifs avec des indicateurs de performance clés (KPI), l'analyse des tendances et des comparaisons pour faciliter la prise de décision via des visualisations dynamiques. Le projet implique l'extraction, la transformation et le chargement (ETL) des données, la création de mesures personnalisées avec DAX, et la conception d'une interface utilisateur intuitive pour les décideurs."
-                },
-                {
-                    title: "SQL — Analyse de données",
-                    description: "Réalisation de requêtes complexes (SELECT, JOIN, GROUP BY, sous-requêtes) et création de vues pour l'analyse décisionnelle.",
-                    technologies: ["SQL", "MySQL", "Data Analysis", "Database Views", "JOIN", "GROUP BY", "Subqueries"],
-                    details: "Dans ce projet SQL, j'ai travaillé sur l'analyse de données avec des requêtes complexes incluant SELECT, JOIN, GROUP BY et des sous-requêtes. J'ai également créé des vues spécifiques pour faciliter l'analyse décisionnelle et l'extraction d'informations pertinentes. Le projet comprend l'optimisation des requêtes pour de meilleures performances, la création de procédures stockées, et la documentation complète du schéma de base de données pour une maintenance facile."
-                }
-            ],
-            academiques: [
-                {
-                    title: "Application Web de gestion des employés (PHP MVC)",
-                    description: "Développement d'une application complète avec authentification sécurisée, gestion CRUD via PDO (modèle Singleton) et interface HTML/CSS dynamique.",
-                    technologies: ["PHP", "MySQL", "HTML/CSS", "MVC", "PDO", "Singleton Pattern"],
-                    details: "Cette application permet de gérer les employés d'une entreprise avec un système d'authentification sécurisé. Elle inclut toutes les opérations CRUD (Create, Read, Update, Delete) et utilise l'architecture MVC pour une meilleure organisation du code. L'application implémente le modèle Singleton pour la connexion à la base de données via PDO, assurant une seule instance de connexion et améliorant les performances. L'interface utilisateur est responsive et intuitive."
-                },
-                {
-                    title: "Mini-projet Java & MySQL",
-                    description: "Conception d'une application CRUD pour gérer des données clients, avec interface graphique Java et base de données MySQL.",
-                    technologies: ["Java", "MySQL", "Swing", "JDBC"],
-                    details: "Application desktop développée en Java avec interface graphique Swing. Elle permet de gérer une base de données clients avec connexion directe à MySQL via JDBC. L'application inclut des fonctionnalités de recherche avancée, de tri des données, et de génération de rapports. L'architecture suit les principes de la programmation orientée objet avec une séparation claire entre la logique métier et l'interface utilisateur."
-                }
-            ],
-            personnels: [
-                {
-                    title: "Application Web de gestion d'une bibliothèque (PHP MVC)",
-                    description: "Conception et développement d'une application avec architecture MVC. Fonctionnalités : ajout, suppression, modification et affichage des livres avec authentification utilisateur. Utilisation de PDO (modèle Singleton) et interface HTML/CSS ergonomique.",
-                    technologies: ["PHP", "MySQL", "HTML/CSS", "MVC", "PDO", "Singleton Pattern"],
-                    details: "Système complet de gestion de bibliothèque permettant d'ajouter, modifier, supprimer et rechercher des livres. L'application inclut un système d'authentification utilisateur et une interface responsive. Elle permet également la gestion des emprunts, des retours et des notifications par email. Le système de recherche avancée permet de trouver des livres par titre, auteur, catégorie ou ISBN."
-                },
-                {
-                    title: "Projet Power BI",
-                    description: "Conception d'un tableau de bord interactif pour l'analyse et la visualisation de données afin d'aider à la prise de décision.",
-                    technologies: ["Power BI", "Data Visualization", "DAX", "Data Modeling"],
-                    details: "Tableau de bord interactif développé avec Power BI pour visualiser et analyser des données commerciales. Inclut des graphiques dynamiques, des filtres interactifs et des indicateurs de performance clés (KPI). Le projet comprend l'intégration de données provenant de multiples sources, la création de relations entre les tables, et le développement de mesures DAX personnalisées pour des analyses spécifiques."
-                },
-                {
-                    title: "Python - Automatisation & Analyse",
-                    description: "Création de scripts pour l'automatisation de tâches et l'analyse de données.",
-                    technologies: ["Python", "Pandas", "NumPy", "Matplotlib", "Automation"],
-                    details: "Collection de scripts Python pour automatiser des tâches répétitives et analyser des jeux de données. Inclut le nettoyage de données, l'analyse statistique et la génération de rapports automatisés. Les scripts utilisent Pandas pour la manipulation des données, NumPy pour les calculs numériques, et Matplotlib pour la visualisation. Un des scripts automatisés génère des rapports PDF quotidiens à partir de données Excel."
-                },
-                {
-                    title: "Retail Sales & Inventory Analytics Dashboard | Power BI",
-                    description: "Dashboard interactif Power BI pour analyser les performances des ventes, les niveaux de stock, les tendances produits, les fournisseurs et les performances régionales.",
-                    technologies: ["Power BI", "Power Query", "DAX", "Python", "Data Visualization", "Business Intelligence"],
-                    details: "🚀 **Présentation du projet**\n\n" +
-                             "Ce projet vise à transformer des données brutes de vente et d'inventaire en insights métiers exploitables à travers un tableau de bord interactif Power BI.\n\n" +
-                             "🎯 **Objectifs**\n" +
-                             "• Analyser les performances globales des ventes\n" +
-                             "• Surveiller le chiffre d'affaires et le profit\n" +
-                             "• Identifier les produits les plus performants\n" +
-                             "• Analyser les ventes par catégorie et par région\n" +
-                             "• Surveiller les niveaux de stock et identifier les produits en rupture\n" +
-                             "• Analyser les performances des fournisseurs\n" +
-                             "• Soutenir la prise de décision basée sur les données\n\n" +
-                             "🛠️ **Technologies utilisées**\n" +
-                             "• Microsoft Power BI\n" +
-                             "• Power Query\n" +
-                             "• DAX\n" +
-                             "• Python (pour le nettoyage et la transformation)\n" +
-                             "• Data Visualization & Business Intelligence\n\n" +
-                             "📌 **Indicateurs clés (KPI)**\n" +
-                             "• Total des ventes, chiffre d'affaires, profit, quantité vendue\n" +
-                             "• Valeur moyenne des commandes\n" +
-                             "• Quantité en stock, nombre de produits, nombre de fournisseurs\n\n" +
-                             "📊 **Fonctionnalités du dashboard**\n" +
-                             "🔹 **Aperçu des ventes** : analyse des revenus, tendances, profit, ventes par catégorie et produit, performance régionale.\n" +
-                             "🔹 **Analyse produit** : produits les plus vendus, performance par catégorie, quantités vendues.\n" +
-                             "🔹 **Analyse des stocks** : niveaux actuels, produits en stock faible, distribution par catégorie.\n" +
-                             "🔹 **Analyse fournisseurs** : performance, achats par fournisseur, répartition régionale.\n\n" +
-                             "🔍 **Insights clés**\n" +
-                             "• Quels produits génèrent le plus de revenus ?\n" +
-                             "• Quelles catégories sont les plus performantes ?\n" +
-                             "• Quelles régions sont les plus actives ?\n" +
-                             "• Quels produits nécessitent une attention particulière sur les stocks ?\n" +
-                             "• Quels fournisseurs contribuent le plus aux achats ?\n" +
-                             "• Comment les ventes et les stocks évoluent-ils dans le temps ?"
-                }
-            ],
-            autres: [
-                {
-                    title: "Site Web Club OpenMic",
-                    description: "Développement du site web officiel du club OpenMic en PHP, HTML et CSS.",
-                    technologies: ["PHP", "HTML", "CSS", "JavaScript"],
-                    details: "Site web développé pour le club OpenMic de la FSEGN. Présente les activités du club, les événements à venir et permet aux membres de s'inscrire aux différentes activités. Le site inclut un système d'administration pour la gestion du contenu, une galerie photo, et un calendrier des événements. L'interface est responsive et compatible avec tous les navigateurs modernes."
-                }
-            ]
-        }
-    };
-    
     // ========== ÉLÉMENTS DOM ==========
     const elements = {
         nav: document.querySelector('.navbar'),
         hamburger: document.getElementById('hamburger'),
         navLinks: document.querySelector('.nav-links'),
         backToTop: document.getElementById('backToTop'),
-        contactForm: document.getElementById('contactForm'),
-        projectModal: document.getElementById('projectModal'),
-        modalTitle: document.getElementById('modal-title'),
-        modalDescription: document.getElementById('modal-description'),
-        modalTechnologies: document.getElementById('modal-technologies'),
-        closeModal: document.querySelector('.close-modal'),
         tabButtons: document.querySelectorAll('.tab-btn'),
         tabContents: document.querySelectorAll('.tab-content'),
         currentYear: document.getElementById('current-year'),
         profileImage: document.getElementById('profile-image'),
         githubLink: document.getElementById('github-link')
-    };
-    
-    // ========== ÉTAT DE L'APPLICATION ==========
-    const state = {
-        currentProjectTab: 'data',
-        activeSection: 'accueil'
     };
     
     // ========== FONCTIONS D'INITIALISATION ==========
@@ -217,70 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Initialiser les projets
-    function initProjects() {
-        // Ajouter les événements aux boutons de projet
-        document.querySelectorAll('.btn-project-details').forEach((btn, index) => {
-            btn.addEventListener('click', function() {
-                const projectCard = this.closest('.project-card');
-                const projectTitle = projectCard.querySelector('h3').textContent;
-                const projectDescription = projectCard.querySelector('p:not(.project-period):not(.project-company):not(.project-description)')?.textContent || 
-                                          projectCard.querySelector('.project-description')?.textContent;
-                
-                // Récupérer toutes les technologies
-                const projectTech = Array.from(projectCard.querySelectorAll('.project-tech span')).map(span => span.textContent);
-                
-                // Trouver le projet correspondant dans les données
-                let projectDetails = null;
-                const category = state.currentProjectTab;
-                
-                // Chercher dans la catégorie correspondante
-                if (config.projects[category]) {
-                    // Chercher par titre (simplifié)
-                    projectDetails = config.projects[category].find(p => 
-                        p.title.toLowerCase().includes(projectTitle.toLowerCase()) ||
-                        projectTitle.toLowerCase().includes(p.title.toLowerCase().substring(0, 15))
-                    );
-                }
-                
-                // Si pas trouvé, chercher dans toutes les catégories
-                if (!projectDetails) {
-                    for (const cat in config.projects) {
-                        const found = config.projects[cat].find(p => 
-                            p.title.toLowerCase().includes(projectTitle.toLowerCase()) ||
-                            projectTitle.toLowerCase().includes(p.title.toLowerCase().substring(0, 15))
-                        );
-                        if (found) {
-                            projectDetails = found;
-                            break;
-                        }
-                    }
-                }
-                
-                // Si toujours pas trouvé, créer un objet à partir des infos de la carte
-                if (!projectDetails) {
-                    projectDetails = {
-                        title: projectTitle,
-                        description: projectDescription || "Description détaillée du projet.",
-                        technologies: projectTech,
-                        details: projectDescription || "Description détaillée du projet."
-                    };
-                }
-                
-                openProjectModal(projectDetails);
-            });
-        });
-    }
-    
     // Initialiser les onglets de projets
     function initProjectTabs() {
         if (elements.tabButtons && elements.tabContents) {
             elements.tabButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
                     const tabId = this.getAttribute('data-tab');
-                    
-                    // Mettre à jour l'état
-                    state.currentProjectTab = tabId;
                     
                     // Mettre à jour les boutons actifs
                     elements.tabButtons.forEach(b => b.classList.remove('active'));
@@ -294,10 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     });
                     
-                    // Réinitialiser les animations des projets
+                    // Réinitialiser les animations
                     setTimeout(() => {
                         initScrollAnimations();
-                        initProjects(); // Réinitialiser les écouteurs de projet
                     }, 300);
                 });
             });
@@ -313,64 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Fermer le menu mobile en cliquant sur un lien
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 elements.hamburger.classList.remove('active');
                 elements.navLinks.classList.remove('active');
             });
-        });
-    }
-    
-    // Initialiser le formulaire de contact
-    function initContactForm() {
-        if (elements.contactForm) {
-            elements.contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Récupérer les valeurs du formulaire
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const subject = document.getElementById('subject').value;
-                const message = document.getElementById('message').value;
-                
-                // Validation basique
-                if (!name || !email || !message) {
-                    showNotification('Veuillez remplir tous les champs obligatoires', 'error');
-                    return;
-                }
-                
-                // Validation d'email simple
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    showNotification('Veuillez entrer une adresse email valide', 'error');
-                    return;
-                }
-                
-                // Simuler l'envoi du formulaire
-                simulateFormSubmission(name, email, subject, message);
-            });
-        }
-    }
-    
-    // Initialiser la modal de projet
-    function initProjectModal() {
-        if (elements.closeModal) {
-            elements.closeModal.addEventListener('click', closeProjectModal);
-        }
-        
-        // Fermer la modal en cliquant à l'extérieur
-        elements.projectModal.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeProjectModal();
-            }
-        });
-        
-        // Fermer la modal avec la touche Échap
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && elements.projectModal.style.display === 'flex') {
-                closeProjectModal();
-            }
         });
     }
     
@@ -388,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialiser la navigation active
     function initActiveNavigation() {
-        // Observer les sections pour mettre à jour la navigation
         const observerOptions = {
             root: null,
             rootMargin: '0px',
@@ -398,12 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    state.activeSection = entry.target.id;
-                    
-                    // Mettre à jour les liens de navigation
+                    const sectionId = entry.target.id;
                     document.querySelectorAll('.nav-links a').forEach(link => {
                         link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${state.activeSection}`) {
+                        if (link.getAttribute('href') === `#${sectionId}`) {
                             link.classList.add('active');
                         }
                     });
@@ -411,7 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, observerOptions);
         
-        // Observer toutes les sections
         document.querySelectorAll('section[id]').forEach(section => {
             observer.observe(section);
         });
@@ -422,26 +113,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (elements.githubLink) {
             elements.githubLink.addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification('Mon profil GitHub sera bientôt disponible !', 'info');
+                alert('Mon profil GitHub sera bientôt disponible !');
             });
         }
         
-        // Lien GitHub dans la section hero
         const heroGithubLink = document.querySelector('.social-icons a[title="GitHub"]');
         if (heroGithubLink) {
             heroGithubLink.addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification('Mon profil GitHub sera bientôt disponible !', 'info');
+                alert('Mon profil GitHub sera bientôt disponible !');
             });
         }
     }
     
     // ========== FONCTIONS D'ANIMATION ==========
     
-    // Gérer les animations au scroll
     function initScrollAnimations() {
-        if (!config.scrollAnimation.enabled) return;
-        
         const animatedElements = document.querySelectorAll(
             '.highlight-card, .timeline-item, .experience-card, .club-card, .project-card, .skills-category'
         );
@@ -454,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, {
             threshold: 0.1,
-            rootMargin: `0px 0px -${config.scrollAnimation.offset}px 0px`
+            rootMargin: '0px 0px -100px 0px'
         });
         
         animatedElements.forEach(el => {
@@ -462,128 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== FONCTIONS D'INTERACTION ==========
-    
-    // Ouvrir la modal de projet
-    function openProjectModal(project) {
-        if (!project || !elements.modalTitle) return;
-        
-        // Mettre à jour le contenu de la modal
-        elements.modalTitle.textContent = project.title;
-        
-        // Formater la description avec les sauts de ligne
-        let description = project.details || project.description;
-        description = description.replace(/\n/g, '<br>');
-        description = description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        description = description.replace(/🔹/g, '🔹');
-        description = description.replace(/•/g, '•');
-        
-        elements.modalDescription.innerHTML = description;
-        
-        // Mettre à jour les technologies
-        if (elements.modalTechnologies) {
-            elements.modalTechnologies.innerHTML = '';
-            if (project.technologies && project.technologies.length > 0) {
-                project.technologies.forEach(tech => {
-                    const techSpan = document.createElement('span');
-                    techSpan.className = 'skill-tag';
-                    techSpan.textContent = tech;
-                    elements.modalTechnologies.appendChild(techSpan);
-                });
-            }
-        }
-        
-        // Afficher la modal
-        elements.projectModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
-    
-    // Fermer la modal de projet
-    function closeProjectModal() {
-        elements.projectModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-    
-    // Simuler l'envoi du formulaire
-    function simulateFormSubmission(name, email, subject, message) {
-        // Afficher un indicateur de chargement
-        const submitBtn = elements.contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Envoi en cours...';
-        submitBtn.disabled = true;
-        
-        // Simuler un délai d'envoi
-        setTimeout(() => {
-            // Réinitialiser le formulaire
-            elements.contactForm.reset();
-            
-            // Restaurer le bouton
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            
-            // Afficher une notification de succès
-            showNotification('Votre message a été envoyé avec succès ! Je vous répondrai dans les plus brefs délais.', 'success');
-            
-            // Simuler l'envoi par email (dans un environnement réel, ce serait une requête AJAX)
-            console.log('Message envoyé:');
-            console.log('De:', name);
-            console.log('Email:', email);
-            console.log('Sujet:', subject);
-            console.log('Message:', message);
-        }, 1500);
-    }
-    
-    // Afficher une notification
-    function showNotification(message, type = 'info') {
-        // Supprimer les notifications existantes
-        const existingNotification = document.querySelector('.notification');
-        if (existingNotification) {
-            existingNotification.remove();
-        }
-        
-        // Créer la notification
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.innerHTML = `
-            <div class="notification-content">
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            </div>
-            <button class="notification-close"><i class="fas fa-times"></i></button>
-        `;
-        
-        // Ajouter au DOM
-        document.body.appendChild(notification);
-        
-        // Afficher avec animation
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 10);
-        
-        // Fermer la notification
-        notification.querySelector('.notification-close').addEventListener('click', () => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        });
-        
-        // Fermer automatiquement après 5 secondes
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }
-        }, 5000);
-    }
-    
     // ========== ÉVÉNEMENTS GLOBAUX ==========
     
-    // Gérer le défilement de la page
     function handleScroll() {
-        // Gérer la navbar
         if (elements.nav) {
             if (window.scrollY > 50) {
                 elements.nav.classList.add('scrolled');
@@ -592,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Gérer le bouton retour en haut
         if (elements.backToTop) {
             if (window.scrollY > 300) {
                 elements.backToTop.style.display = 'block';
@@ -602,114 +169,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ========== STYLES DYNAMIQUES POUR LES NOTIFICATIONS ==========
-    function addNotificationStyles() {
-        const style = document.createElement('style');
-        style.textContent = `
-            .notification {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                padding: 15px 20px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                min-width: 300px;
-                max-width: 400px;
-                transform: translateX(120%);
-                transition: transform 0.3s ease;
-                z-index: 9999;
-                border-left: 4px solid #3498db;
-            }
-            
-            .notification.show {
-                transform: translateX(0);
-            }
-            
-            .notification-success {
-                border-left-color: #2ecc71;
-            }
-            
-            .notification-error {
-                border-left-color: #e74c3c;
-            }
-            
-            .notification-info {
-                border-left-color: #3498db;
-            }
-            
-            .notification-content {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                flex: 1;
-            }
-            
-            .notification-content i {
-                font-size: 1.2rem;
-            }
-            
-            .notification-success .notification-content i {
-                color: #2ecc71;
-            }
-            
-            .notification-error .notification-content i {
-                color: #e74c3c;
-            }
-            
-            .notification-info .notification-content i {
-                color: #3498db;
-            }
-            
-            .notification-close {
-                background: none;
-                border: none;
-                cursor: pointer;
-                color: #7f8c8d;
-                font-size: 1rem;
-                margin-left: 10px;
-                transition: color 0.2s;
-            }
-            
-            .notification-close:hover {
-                color: #2c3e50;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
     // ========== INITIALISATION ==========
     function init() {
-        // Ajouter les styles pour les notifications
-        addNotificationStyles();
-        
-        // Initialiser les composants
         initCurrentYear();
         initProjectTabs();
         initMobileNavigation();
-        initContactForm();
-        initProjectModal();
         initBackToTop();
         initActiveNavigation();
-        initProjects();
         initGitHubLinks();
         initScrollAnimations();
         
-        // Écouter les événements globaux
         window.addEventListener('scroll', handleScroll);
-        
-        // Initialiser le scroll
         handleScroll();
         
-        // Afficher une notification de bienvenue
-        setTimeout(() => {
-            showNotification('Bienvenue sur mon portfolio ! Explorez mes projets et compétences.', 'info');
-        }, 1000);
-        
-        // Gérer les images manquantes
         if (elements.profileImage) {
             elements.profileImage.onerror = function() {
                 this.src = 'https://via.placeholder.com/350x350/3498db/ffffff?text=Hazem+Khaled';
@@ -717,11 +189,9 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         }
         
-        // Log d'initialisation
         console.log('Portfolio de Hazem Khaled initialisé avec succès!');
         console.log('Contact: hazemhazem9089@gmail.com | LinkedIn: linkedin.com/in/hazem-khaled-data');
     }
     
-    // Démarrer l'application
     init();
 });
