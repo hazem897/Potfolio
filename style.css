@@ -145,3 +145,25 @@ footer small { color: #777771; font-family: 'DM Mono', monospace; font-size: .65
   .education { gap: 40px; }
   footer { align-items: start; flex-direction: column; padding: 40px 20px; }
 }
+
+.project-details {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.project-details p {
+  margin-bottom: 12px;
+}
+.project-details ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 16px;
+}
+.project-details ul li {
+  margin-bottom: 8px;
+}
+.project-details ul ul {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
