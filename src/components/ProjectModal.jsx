@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Play, X } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { ArrowUpRight, Play, X } from 'lucide-react';
 
 export default function ProjectModal({
   selectedProject,
@@ -8,7 +8,9 @@ export default function ProjectModal({
   onSwitchToVideo
 }) {
   const isOpen = Boolean(selectedProject || videoProject);
+  const videoRef = useRef(null);
 
+  // Close on Escape & prevent body scroll
   useEffect(() => {
     if (!isOpen) return;
 
@@ -26,6 +28,19 @@ export default function ProjectModal({
       document.body.style.overflow = '';
     };
   }, [isOpen, onClose]);
+
+  // Ensure video loads and starts playing reliably in all browsers
+  useEffect(() => {
+    if (videoProject && videoRef.current) {
+      videoRef.current.load();
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay blocked by browser policy; user can click the play button
+        });
+      }
+    }
+  }, [videoProject]);
 
   if (!isOpen) return null;
 
@@ -55,16 +70,34 @@ export default function ProjectModal({
           <>
             <p className="section-kicker">DÉMONSTRATION VIDÉO</p>
             <h2>{videoProject.title}</h2>
+
             <video
+              ref={videoRef}
               className="project-video"
               controls
               autoPlay
               playsInline
+              preload="auto"
+              src={`/videos/${encodeURIComponent(videoProject.video)}`}
               key={videoProject.video}
             >
-              <source src={`/videos/${videoProject.video}`} type="video/mp4" />
+              <source
+                src={`/videos/${encodeURIComponent(videoProject.video)}`}
+                type="video/mp4"
+              />
               Votre navigateur ne prend pas en charge la lecture de vidéos.
             </video>
+
+            <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <a
+                className="button button-quiet"
+                href={`/videos/${encodeURIComponent(videoProject.video)}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ouvrir la vidéo dans un nouvel onglet <ArrowUpRight size={15} />
+              </a>
+            </div>
           </>
         ) : (
           <>

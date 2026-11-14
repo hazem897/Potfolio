@@ -7,7 +7,7 @@ export const experiences = [
     text: 'Plateforme décisionnelle sécurisée de bout en bout avec React.js, Node.js, Power BI, Talend et PostgreSQL. Conception du Data Warehouse, RBAC/JWT et modèle XGBoost pour la prédiction des KPI métiers.'
   },
   {
-    period: 'Juil. 2026',
+    period: 'Juin 2026 — Juil. 2026',
     title: 'Stage Business Intelligence',
     company: 'CodeAlpha',
     place: 'Tunisie · Télétravail',

@@ -9,7 +9,7 @@ export default function About() {
         </h2>
         <div>
           <p>
-            Étudiant en Informatique de Gestion, spécialisé en Business Intelligence, SQL, Power BI et Excel. J’aime relier la technique aux enjeux réels d’une organisation.
+            Étudiant en Mastère Informatique (ISIC) et diplômé en Informatique de Gestion (spécialité Business Intelligence). J’aime relier la technique aux enjeux réels d’une organisation.
           </p>
           <p>
             Mon objectif : concevoir des solutions data fiables, lisibles et directement utiles à la prise de décision.
