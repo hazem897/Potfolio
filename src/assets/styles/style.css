@@ -167,3 +167,80 @@ footer small { color: #777771; font-family: 'DM Mono', monospace; font-size: .65
   margin-top: 8px;
 }
 
+
+.button-cv {
+  background: var(--coral);
+  color: var(--white);
+  border: 1px solid var(--coral);
+}
+.button-cv:hover {
+  background: #d95339;
+  border-color: #d95339;
+  color: var(--white);
+}
+.orbit-note a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.orbit-note a:hover {
+  color: var(--coral);
+}
+.hero-social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-social-btn svg {
+  flex-shrink: 0;
+}
+
+.project-details h4 {
+  color: var(--ink);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  margin: 22px 0 12px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+}
+.project-details ul li {
+  margin-bottom: 10px;
+  color: #3f3e3a;
+  position: relative;
+  padding-left: 18px;
+}
+.project-details ul li::before {
+  content: '▪';
+  color: var(--coral);
+  position: absolute;
+  left: 0;
+  top: -1px;
+}
+.project-details ul li strong {
+  color: var(--ink);
+}
+.project-tech-env {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--coral);
+  margin-top: 24px;
+  padding: 14px 18px;
+}
+.project-tech-env p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.project-tech-env strong {
+  color: var(--coral);
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
