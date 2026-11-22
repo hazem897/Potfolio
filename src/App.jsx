@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import ScrollProgress from './components/ScrollProgress';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,12 +9,16 @@ import Skills from './components/Skills';
 import Education from './components/Education';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
+import useScrollReveal from './hooks/useScrollReveal';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('data');
   const [selectedProject, setSelectedProject] = useState(null);
   const [videoProject, setVideoProject] = useState(null);
+
+  // Activate scroll-reveal animations
+  useScrollReveal();
 
   const handleCloseModals = useCallback(() => {
     setSelectedProject(null);
@@ -37,6 +42,7 @@ export default function App() {
 
   return (
     <>
+      <ScrollProgress />
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
       <main>

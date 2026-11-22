@@ -12,13 +12,13 @@ export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpe
 
   return (
     <section className="projects section" id="projets">
-      <div className="section-kicker">03 — SÉLECTION</div>
-      <div className="section-heading">
+      <div className="section-kicker reveal">03 — SÉLECTION</div>
+      <div className="section-heading reveal">
         <h2>Projets</h2>
         <p>Quelques cas où la donnée devient une histoire compréhensible.</p>
       </div>
 
-      <div className="tabs" role="tablist">
+      <div className="tabs reveal" role="tablist">
         {tabs.map(([id, label]) => (
           <button
             key={id}
@@ -35,8 +35,9 @@ export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpe
       <div className="project-grid">
         {visibleProjects.map((project, index) => (
           <article
-            className={`project-card ${index === 0 ? 'featured' : ''}`}
+            className={`project-card reveal${index === 0 ? ' featured' : ''}`}
             key={project.title + index}
+            style={{ transitionDelay: `${index * 70}ms` }}
           >
             <div className="project-top">
               <span>0{index + 1}</span>

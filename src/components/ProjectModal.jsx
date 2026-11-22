@@ -10,14 +10,12 @@ export default function ProjectModal({
   const isOpen = Boolean(selectedProject || videoProject);
   const videoRef = useRef(null);
 
-  // Close on Escape & prevent body scroll
+  // Close on Escape & lock body scroll
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
+      if (e.key === 'Escape') onClose();
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -29,14 +27,14 @@ export default function ProjectModal({
     };
   }, [isOpen, onClose]);
 
-  // Ensure video loads and starts playing reliably in all browsers
+  // Autoplay video on open (fast-start MP4)
   useEffect(() => {
     if (videoProject && videoRef.current) {
-      videoRef.current.load();
+      videoRef.current.currentTime = 0;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          // Autoplay blocked by browser policy; user can click the play button
+          // Autoplay policy prevented automatic playback; controls remain available
         });
       }
     }
@@ -55,7 +53,7 @@ export default function ProjectModal({
             ? `Vidéo ${videoProject.title}`
             : `Détails ${selectedProject?.title ?? 'Projet'}`
         }
-        onClick={(event) => event.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <button
           className="modal-close"
@@ -71,31 +69,30 @@ export default function ProjectModal({
             <p className="section-kicker">DÉMONSTRATION VIDÉO</p>
             <h2>{videoProject.title}</h2>
 
-            <video
-              ref={videoRef}
-              className="project-video"
-              controls
-              autoPlay
-              playsInline
-              preload="auto"
-              src={`/videos/${encodeURIComponent(videoProject.video)}`}
-              key={videoProject.video}
-            >
-              <source
-                src={`/videos/${encodeURIComponent(videoProject.video)}`}
-                type="video/mp4"
-              />
-              Votre navigateur ne prend pas en charge la lecture de vidéos.
-            </video>
+            <div className="video-wrapper">
+              <video
+                ref={videoRef}
+                className="project-video"
+                controls
+                autoPlay
+                playsInline
+                preload="metadata"
+                key={videoProject.video}
+                src={`/videos/${videoProject.video}`}
+              >
+                <source src={`/videos/${videoProject.video}`} type="video/mp4" />
+                Votre navigateur ne prend pas en charge la lecture de vidéos.
+              </video>
+            </div>
 
-            <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <div style={{ marginTop: '18px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <a
                 className="button button-quiet"
-                href={`/videos/${encodeURIComponent(videoProject.video)}`}
+                href={`/videos/${videoProject.video}`}
                 target="_blank"
                 rel="noreferrer"
               >
-                Ouvrir la vidéo dans un nouvel onglet <ArrowUpRight size={15} />
+                Ouvrir dans un nouvel onglet <ArrowUpRight size={15} />
               </a>
             </div>
           </>
@@ -123,7 +120,7 @@ export default function ProjectModal({
                 onClick={() => onSwitchToVideo(selectedProject)}
                 type="button"
               >
-                <Play size={16} /> Voir la vidéo
+                <Play size={15} /> Voir la vidéo
               </button>
             )}
           </>

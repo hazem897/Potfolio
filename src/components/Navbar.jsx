@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -9,10 +10,17 @@ const navLinks = [
 ];
 
 export default function Navbar({ menuOpen, setMenuOpen }) {
+  const [scrolled, setScrolled] = useState(false);
   const closeMenu = () => setMenuOpen(false);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="topbar">
+    <header className={`topbar${scrolled ? ' scrolled' : ''}`}>
       <a className="brand" href="#accueil" onClick={closeMenu}>
         HK<span>.</span>
       </a>

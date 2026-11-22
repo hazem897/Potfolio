@@ -13,13 +13,13 @@ function SkillTag({ item }) {
 export default function Skills() {
   return (
     <section className="skills section" id="competences">
-      <div className="section-kicker">04 — EXPERTISE</div>
-      <div className="section-heading">
+      <div className="section-kicker reveal">04 — EXPERTISE</div>
+      <div className="section-heading reveal">
         <h2>Compétences</h2>
-        <p>Une boîte à outils pensée pour passer de la donnée brute à l’insight.</p>
+        <p>Une boîte à outils pensée pour passer de la donnée brute à l'insight.</p>
       </div>
 
-      <div className="skills-grid">
+      <div className="skills-grid reveal-stagger">
         {skillGroups.map(([title, items]) => (
           <article className="skill-group" key={title}>
             <h3>{title}</h3>
