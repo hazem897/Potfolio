@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ExternalLink, Play, Maximize2, X } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, Maximize2, Play, X, Film } from 'lucide-react';
 
 export default function ProjectModal({
   selectedProject,
@@ -39,25 +39,17 @@ export default function ProjectModal({
       if (playPromise !== undefined) {
         playPromise
           .then(() => setIsPlaying(true))
-          .catch(() => {
-            // Autoplay policy prevented; controls still available
-          });
+          .catch(() => {});
       }
     }
   }, [videoProject]);
 
   if (!isOpen) return null;
 
-  const isVideoMode = Boolean(videoProject);
-
   return (
-    <div
-      className={`modal-backdrop${isVideoMode ? ' modal-backdrop--video' : ''}`}
-      onClick={onClose}
-      role="presentation"
-    >
+    <div className="modal-backdrop" onClick={onClose} role="presentation">
       <div
-        className={`project-modal${isVideoMode ? ' project-modal--video' : ''}`}
+        className={`project-modal${videoProject ? ' project-modal--video' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label={
@@ -77,29 +69,43 @@ export default function ProjectModal({
           <X size={18} />
         </button>
 
-        {isVideoMode ? (
+        {videoProject ? (
+          /* ── VIDEO MODAL ── */
           <div className="video-modal-layout">
-            {/* Left sidebar — meta */}
+
+            {/* Left sidebar: metadata */}
             <div className="video-modal-sidebar">
               <span className="video-modal-eyebrow">
-                <span className="video-eyebrow-dot" />
-                Démonstration
+                <Film size={12} />
+                DÉMONSTRATION
               </span>
 
               <h2 className="video-modal-title">{videoProject.title}</h2>
 
-              <div className="video-modal-tags">
-                {videoProject.tags?.map((tag) => (
-                  <span key={tag} className="video-modal-tag">{tag}</span>
-                ))}
-              </div>
+              {videoProject.meta && (
+                <span className="video-modal-category">{videoProject.meta}</span>
+              )}
+
+              <div className="video-modal-divider" />
+
+              {videoProject.tags && videoProject.tags.length > 0 && (
+                <div className="video-modal-tags">
+                  <p className="video-modal-tags-label">STACK</p>
+                  <div className="tags tags--compact">
+                    {videoProject.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="video-modal-actions">
                 <a
-                  className="video-modal-open-btn"
+                  className="button button-quiet video-modal-open-btn"
                   href={`/videos/${videoProject.video}`}
                   target="_blank"
                   rel="noreferrer"
+                  title="Ouvrir en plein écran"
                 >
                   <ExternalLink size={14} />
                   Plein écran
@@ -107,10 +113,12 @@ export default function ProjectModal({
               </div>
             </div>
 
-            {/* Right — video player */}
+            {/* Right: video player */}
             <div className="video-modal-player">
               <div className="video-player-frame">
-                <div className="video-player-glow" />
+                <div className={`video-ready-overlay${isVideoReady ? ' hidden' : ''}`}>
+                  <div className="video-spinner" />
+                </div>
                 <video
                   ref={videoRef}
                   className="project-video"
@@ -126,18 +134,15 @@ export default function ProjectModal({
                 >
                   <source src={`/videos/${videoProject.video}`} type="video/mp4" />
                 </video>
-
-                {!isVideoReady && (
-                  <div className="video-loading-overlay">
-                    <div className="video-loading-spinner" />
-                    <span>Chargement…</span>
-                  </div>
-                )}
+                {/* Coral accent bar under video */}
+                <div className="video-accent-bar" />
               </div>
             </div>
           </div>
+
         ) : (
-          <div className="details-modal-layout">
+          /* ── DETAILS MODAL ── */
+          <>
             <p className="section-kicker">DÉTAILS DU PROJET</p>
             <h2>{selectedProject.title}</h2>
             <p className="project-modal-meta">{selectedProject.meta}</p>
@@ -163,7 +168,7 @@ export default function ProjectModal({
                 <Play size={15} /> Voir la vidéo
               </button>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>
