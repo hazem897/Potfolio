@@ -7,6 +7,7 @@ export const skillGroups = [
 
 export const skillLogos = {
   SQL: '/Image/Sql.png',
+  'SQL Server': '/Image/Sql.png',
   Python: '/Image/Python.jpg',
   Java: '/Image/Java.png',
   PHP: '/Image/Php.png',
@@ -17,6 +18,7 @@ export const skillLogos = {
   MySQL: '/Image/Mysql.png',
   PostgreSQL: '/Image/Postgres.jpg',
   'Power BI': '/Image/Powerbi.jpg',
+  'Excel 2019 certifié': '/Image/Excel.jpg',
   Excel: '/Image/Excel.jpg',
   Talend: '/Image/Talend.png',
   'React.js': '/Image/React.png',
