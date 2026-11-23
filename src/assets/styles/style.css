@@ -312,8 +312,34 @@ em {
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 48px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+/* Minimalist Social Icons Row (Image 4 reference) */
+.hero-social-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.hero-social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #7d8ba1;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.hero-social-icon:hover {
+  color: #2dd4bf;
+  transform: translateY(-3px) scale(1.18);
+  filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.6));
 }
 
 /* =========================================
