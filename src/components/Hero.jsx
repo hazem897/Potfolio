@@ -1,9 +1,10 @@
+import { useState, useEffect } from 'react';
 import { ArrowUpRight, Download, Mail, MapPin } from 'lucide-react';
 
 function LinkedInIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.65 1.65 0 0 0-1.66 1.65 1.65 1.65 0 0 0 1.66 1.65 1.66 1.66 0 0 0 1.66-1.65c0-.91-.75-1.65-1.66-1.65Z" />
+      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.65 1.65 0 0 0-1.66 1.65 1.65 1.65 0 0 0 1.66 1.65 1.66 1.66 0 0 0 1.66-1.65Z" />
     </svg>
   );
 }
@@ -16,7 +17,52 @@ function GitHubIcon() {
   );
 }
 
+const titles = [
+  'Business Intelligence Specialist',
+  'Data Analyst & Power BI Expert',
+  'Data Engineer & Python Developer',
+  'Solutions Décisionnelles & Big Data'
+];
+
+function useTypewriter(words, typingSpeed = 75, deletingSpeed = 40, pauseTime = 1800) {
+  const [text, setText] = useState('');
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = words[wordIndex % words.length];
+    let timer;
+
+    if (!isDeleting) {
+      if (text.length < currentWord.length) {
+        timer = setTimeout(() => {
+          setText(currentWord.slice(0, text.length + 1));
+        }, typingSpeed);
+      } else {
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, pauseTime);
+      }
+    } else {
+      if (text.length > 0) {
+        timer = setTimeout(() => {
+          setText(currentWord.slice(0, text.length - 1));
+        }, deletingSpeed);
+      } else {
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % words.length);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseTime]);
+
+  return text;
+}
+
 export default function Hero() {
+  const typedRole = useTypewriter(titles);
+
   return (
     <section className="hero" id="accueil">
       <div className="hero-copy">
@@ -25,6 +71,12 @@ export default function Hero() {
           Hazem<br />
           <em>Khaled</em>
         </h1>
+
+        <div className="hero-typewriter" aria-label={`Spécialité : ${typedRole}`}>
+          <span className="typewriter-text">{typedRole}</span>
+          <span className="typewriter-cursor">|</span>
+        </div>
+
         <p className="hero-lead">
           Je transforme les données complexes en décisions claires et en produits utiles.
         </p>

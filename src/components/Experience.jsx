@@ -14,16 +14,21 @@ export default function Experience() {
           <article
             className="experience-item reveal"
             key={item.company + index}
-            style={{ transitionDelay: `${index * 80}ms` }}
+            style={{ transitionDelay: `${index * 90}ms` }}
           >
-            <span className="experience-number">0{index + 1}</span>
-            <div className="experience-period">{item.period}</div>
-            <div className="experience-content">
-              <h3>{item.title}</h3>
-              <p className="company">
+            <div className="experience-timeline-col">
+              <span className="experience-number">0{index + 1}</span>
+              <div className="experience-dot" />
+            </div>
+
+            <div className="experience-content-card">
+              <div className="experience-header">
                 <span className="company-badge">{item.company}</span>
-                <span> · {item.place}</span>
-              </p>
+                <span className="experience-period">{item.period}</span>
+                <span className="experience-place">· {item.place}</span>
+              </div>
+
+              <h3>{item.title}</h3>
               <p>{item.text}</p>
             </div>
           </article>

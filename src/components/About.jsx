@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { MapPin, GraduationCap, Sparkles, Target } from 'lucide-react';
 
 function useCounter(target, duration = 1500) {
   const ref = useRef(null);
@@ -8,9 +9,8 @@ function useCounter(target, duration = 1500) {
     const el = ref.current;
     if (!el) return;
 
-    // Parse target: "04" → 4, "15+" → 15, "2026" → 2026
     const numericTarget = parseInt(target.replace(/\D/g, ''), 10);
-    const suffix = target.replace(/[\d]/g, ''); // e.g. "+"
+    const suffix = target.replace(/[\d]/g, '');
 
     const obs = new IntersectionObserver(
       ([entry]) => {
@@ -20,10 +20,8 @@ function useCounter(target, duration = 1500) {
           const tick = () => {
             const elapsed = Date.now() - start;
             const progress = Math.min(elapsed / duration, 1);
-            // Ease out cubic
             const eased = 1 - Math.pow(1 - progress, 3);
             const current = Math.round(eased * numericTarget);
-            // Format with leading zero if original had one (e.g. "04")
             const formatted =
               target.length === 2 && target.startsWith('0') && current < 10
                 ? `0${current}`
@@ -35,7 +33,7 @@ function useCounter(target, duration = 1500) {
           obs.unobserve(el);
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.3 }
     );
 
     obs.observe(el);
@@ -53,33 +51,57 @@ export default function About() {
   return (
     <section className="intro section" id="profil">
       <div className="section-kicker reveal">01 — À PROPOS</div>
-      <div className="intro-grid">
-        <h2 className="reveal-left">
-          Un regard analytique,<br />
-          <span>une approche concrète.</span>
-        </h2>
-        <div className="reveal-right">
-          <p>
-            Étudiant en Mastère Informatique (ISIC) et diplômé en Informatique de Gestion
-            (spécialité Business Intelligence). J'aime relier la technique aux enjeux réels
-            d'une organisation.
-          </p>
-          <p>
-            Mon objectif : concevoir des solutions data fiables, lisibles et directement
-            utiles à la prise de décision.
-          </p>
-          <div className="metrics">
-            <div>
-              <strong ref={ref1}>04</strong>
-              <span>expériences</span>
+
+      <div className="about-wrapper">
+        <div className="intro-grid">
+          <div className="about-heading-col reveal-left">
+            <h2>
+              Un regard analytique,<br />
+              <span className="accent-heading">une approche concrète.</span>
+            </h2>
+
+            <div className="about-badges">
+              <span className="about-badge">
+                <MapPin size={14} /> Médenine, Tunisie
+              </span>
+              <span className="about-badge">
+                <GraduationCap size={14} /> Mastère Informatique (ISIC)
+              </span>
             </div>
-            <div>
-              <strong ref={ref2}>15+</strong>
-              <span>technologies</span>
+          </div>
+
+          <div className="about-content-col reveal-right">
+            <p className="about-text-lead">
+              Étudiant en Mastère Informatique (ISIC) et diplômé en Informatique de Gestion
+              (spécialité Business Intelligence). J'aime relier la technique aux enjeux réels
+              d'une organisation.
+            </p>
+
+            {/* Objective callout box */}
+            <div className="about-quote-box">
+              <div className="about-quote-header">
+                <Target size={15} className="quote-icon" />
+                <span className="quote-label">// OBJECTIF PROFESSIONNEL</span>
+              </div>
+              <p className="about-quote-text">
+                Mon objectif : concevoir des solutions data fiables, lisibles et directement
+                utiles à la prise de décision.
+              </p>
             </div>
-            <div>
-              <strong ref={ref3}>2026</strong>
-              <span>année de spécialisation</span>
+
+            <div className="metrics">
+              <div className="metric-card">
+                <strong ref={ref1}>04</strong>
+                <span>expériences</span>
+              </div>
+              <div className="metric-card">
+                <strong ref={ref2}>15+</strong>
+                <span>technologies</span>
+              </div>
+              <div className="metric-card">
+                <strong ref={ref3}>2026</strong>
+                <span>spécialisation</span>
+              </div>
             </div>
           </div>
         </div>
