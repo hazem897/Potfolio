@@ -1336,33 +1336,58 @@ h2 {
 .video-wrapper {
   position: relative;
   margin-top: 28px;
+  background: #060b14;
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .project-video {
-  background: #090a0c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #060b14;
+  border: 1px solid rgba(45, 212, 191, 0.2);
   border-radius: var(--radius);
   display: block;
-  max-height: 60vh;
+  max-height: 62vh;
   width: 100%;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  object-fit: contain;
 }
 
-.video-loading-hint {
+.video-loading-spinner-overlay {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 14px;
+  background: rgba(8, 15, 29, 0.65);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius);
+  z-index: 5;
+  transition: opacity 0.3s ease;
   pointer-events: none;
-  color: rgba(255, 255, 255, .5);
-  font-size: .8rem;
-  font-family: 'DM Mono', monospace;
 }
 
-/* Hide hint once video has src */
-.project-video[src]~.video-loading-hint {
-  display: none;
+.video-spinner-ring {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(45, 212, 191, 0.2);
+  border-top-color: #2dd4bf;
+  border-radius: 50%;
+  animation: videoSpin 0.75s linear infinite;
+}
+
+@keyframes videoSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.video-loading-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: #a5f3fc;
 }
 
 .modal-video-button {

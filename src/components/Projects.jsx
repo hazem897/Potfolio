@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
 import { projects } from '../data/projects';
 
@@ -7,8 +8,43 @@ const tabs = [
   ['personnels', 'Personnels']
 ];
 
+// In-memory set to ensure each video/poster is prefetched only once per session
+const prefetchedUrls = new Set();
+function prefetchVideoResource(videoName) {
+  if (!videoName || prefetchedUrls.has(videoName)) return;
+  prefetchedUrls.add(videoName);
+
+  try {
+    // 1. Prefetch poster image (instant visual frame)
+    const pLink = document.createElement('link');
+    pLink.rel = 'prefetch';
+    pLink.as = 'image';
+    pLink.href = `/videos/posters/${videoName.replace('.mp4', '.jpg')}`;
+    document.head.appendChild(pLink);
+
+    // 2. Prefetch video file (warm browser/CDN cache)
+    const vLink = document.createElement('link');
+    vLink.rel = 'prefetch';
+    vLink.as = 'video';
+    vLink.href = `/videos/${videoName}`;
+    document.head.appendChild(vLink);
+  } catch {
+    // Graceful fallback if prefetch not allowed
+  }
+}
+
 export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpenVideo }) {
   const visibleProjects = projects[activeTab] ?? projects.data;
+
+  // Preload poster images on mount so they are cached in advance
+  useEffect(() => {
+    Object.values(projects).flat().forEach((proj) => {
+      if (proj.video) {
+        const posterImg = new Image();
+        posterImg.src = `/videos/posters/${proj.video.replace('.mp4', '.jpg')}`;
+      }
+    });
+  }, []);
 
   return (
     <section className="projects section" id="projets">
@@ -65,6 +101,9 @@ export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpe
                 <button
                   className="project-action project-action-video"
                   onClick={() => onOpenVideo(project)}
+                  onMouseEnter={() => prefetchVideoResource(project.video)}
+                  onTouchStart={() => prefetchVideoResource(project.video)}
+                  onFocus={() => prefetchVideoResource(project.video)}
                   type="button"
                 >
                   <Play size={14} /> Voir la vidéo

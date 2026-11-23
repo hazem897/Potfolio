@@ -19,33 +19,54 @@ function GitHubIcon() {
 
 const TARGET_ROLE = 'Data Analyst & Power BI Expert';
 
-function useSingleTypewriter(targetText, speed = 55, startDelay = 250) {
+/**
+ * Cyclic typewriter: types out text, pauses for 3 seconds,
+ * deletes, and re-types continuously every 3 seconds.
+ */
+function useCyclicTypewriter(
+  targetText = TARGET_ROLE,
+  typingSpeed = 50,
+  pauseDuration = 3000,
+  deletingSpeed = 22
+) {
   const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    let index = 0;
-    setText('');
+    let timer;
 
-    const startTimer = setTimeout(() => {
-      const interval = setInterval(() => {
-        index++;
-        setText(targetText.slice(0, index));
-        if (index >= targetText.length) {
-          clearInterval(interval);
-        }
-      }, speed);
+    if (!isDeleting) {
+      if (text.length < targetText.length) {
+        timer = setTimeout(() => {
+          setText(targetText.slice(0, text.length + 1));
+        }, typingSpeed);
+      } else {
+        // Full text reached: pause for 3 seconds as requested
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, pauseDuration);
+      }
+    } else {
+      if (text.length > 0) {
+        timer = setTimeout(() => {
+          setText(targetText.slice(0, text.length - 1));
+        }, deletingSpeed);
+      } else {
+        // Fully erased: brief pause then re-type
+        timer = setTimeout(() => {
+          setIsDeleting(false);
+        }, 350);
+      }
+    }
 
-      return () => clearInterval(interval);
-    }, startDelay);
-
-    return () => clearTimeout(startTimer);
-  }, [targetText, speed, startDelay]);
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, targetText, typingSpeed, pauseDuration, deletingSpeed]);
 
   return text;
 }
 
 export default function Hero() {
-  const typedRole = useSingleTypewriter(TARGET_ROLE);
+  const typedRole = useCyclicTypewriter(TARGET_ROLE, 50, 3000, 22);
 
   return (
     <section className="hero" id="accueil">

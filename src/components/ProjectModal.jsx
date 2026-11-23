@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Play, X } from 'lucide-react';
 
 export default function ProjectModal({
@@ -9,6 +9,7 @@ export default function ProjectModal({
 }) {
   const isOpen = Boolean(selectedProject || videoProject);
   const videoRef = useRef(null);
+  const [videoLoading, setVideoLoading] = useState(true);
 
   // Close on Escape & lock body scroll
   useEffect(() => {
@@ -27,20 +28,36 @@ export default function ProjectModal({
     };
   }, [isOpen, onClose]);
 
-  // Autoplay video on open (fast-start MP4)
+  // Autoplay video as soon as enough data is buffered
   useEffect(() => {
     if (videoProject && videoRef.current) {
-      videoRef.current.currentTime = 0;
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Autoplay policy prevented automatic playback; controls remain available
-        });
+      setVideoLoading(true);
+      const v = videoRef.current;
+
+      const handleReady = () => {
+        setVideoLoading(false);
+        const playPromise = v.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Autoplay policy prevented playback, controls remain active
+          });
+        }
+      };
+
+      if (v.readyState >= 3) {
+        handleReady();
+      } else {
+        v.addEventListener('canplay', handleReady, { once: true });
+        return () => v.removeEventListener('canplay', handleReady);
       }
     }
   }, [videoProject]);
 
   if (!isOpen) return null;
+
+  const posterPath = videoProject
+    ? `/videos/posters/${videoProject.video.replace('.mp4', '.jpg')}`
+    : '';
 
   return (
     <div className="modal-backdrop" onClick={onClose} role="presentation">
@@ -76,13 +93,24 @@ export default function ProjectModal({
                 controls
                 autoPlay
                 playsInline
-                preload="metadata"
+                preload="auto"
+                poster={posterPath}
                 key={videoProject.video}
                 src={`/videos/${videoProject.video}`}
+                onWaiting={() => setVideoLoading(true)}
+                onPlaying={() => setVideoLoading(false)}
+                onCanPlay={() => setVideoLoading(false)}
+                onLoadedData={() => setVideoLoading(false)}
               >
-                <source src={`/videos/${videoProject.video}`} type="video/mp4" />
                 Votre navigateur ne prend pas en charge la lecture de vidéos.
               </video>
+
+              {videoLoading && (
+                <div className="video-loading-spinner-overlay" aria-live="polite">
+                  <div className="video-spinner-ring" />
+                  <span className="video-loading-text">Chargement instantané...</span>
+                </div>
+              )}
             </div>
 
             <div style={{ marginTop: '18px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
