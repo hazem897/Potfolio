@@ -1540,18 +1540,26 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 11px;
 }
 
-.skill-tile-body svg,
-.skill-tile-body img {
+.skill-tile-icon-badge {
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+
+.skill-tile-icon-badge img {
   width: 100%;
   height: 100%;
-  max-width: 34px;
-  max-height: 34px;
   object-fit: contain;
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
 }
 
 .skill-lang-monogram {
@@ -1574,12 +1582,14 @@ h2 {
   transform: translateY(-6px) scale(1.1);
   background: #13243f;
   border-color: var(--coral);
-  box-shadow: 0 14px 32px rgba(45, 212, 191, 0.32), 0 0 16px rgba(45, 212, 191, 0.18);
+  box-shadow: 0 14px 32px rgba(45, 212, 191, 0.35), 0 0 16px rgba(45, 212, 191, 0.2);
   z-index: 10;
 }
 
-.skill-tile:hover svg,
-.skill-tile:hover img,
+.skill-tile:hover .skill-tile-icon-badge {
+  transform: scale(1.12);
+}
+
 .skill-tile:hover .skill-tile-icon-svg,
 .skill-tile:hover .skill-lang-monogram {
   transform: scale(1.15);
