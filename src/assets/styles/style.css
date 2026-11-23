@@ -485,9 +485,12 @@ em {
 }
 
 @keyframes portraitFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -991,6 +994,7 @@ h2 {
     opacity: 0;
     transform: translateY(22px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1184,14 +1188,28 @@ h2 {
 }
 
 .featured .project-action {
-  border-color: var(--line);
-  color: var(--white);
+  background: #181a20;
+  border: 1px solid var(--line);
+  color: #ffffff;
+}
+
+.featured .project-action.project-action-video {
+  border-color: rgba(45, 212, 191, 0.4);
+  color: var(--coral);
+  background: rgba(45, 212, 191, 0.08);
 }
 
 .featured .project-action:hover {
   background: var(--coral);
   border-color: var(--coral);
   color: #040811;
+}
+
+.featured .project-action.project-action-video:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: #040811;
+  box-shadow: 0 6px 20px rgba(45, 212, 191, 0.45);
 }
 
 .tags {
