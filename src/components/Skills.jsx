@@ -19,9 +19,9 @@ const fallbackIcons = {
 };
 
 const languageMonograms = {
-  'Arabe · maternelle': { code: 'AR', label: 'Arabe · Maternelle', accent: '#166534' },
-  'Français · courant': { code: 'FR', label: 'Français · Courant', accent: '#1e40af' },
-  'Anglais · intermédiaire': { code: 'EN', label: 'Anglais · Intermédiaire', accent: '#991b1b' }
+  'Arabe · maternelle': { code: 'AR', label: 'Arabe · Maternelle', accent: '#22c55e' },
+  'Français · courant': { code: 'FR', label: 'Français · Courant', accent: '#60a5fa' },
+  'Anglais · intermédiaire': { code: 'EN', label: 'Anglais · Intermédiaire', accent: '#f87171' }
 };
 
 function SkillTile({ item, index, groupIndex }) {

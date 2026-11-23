@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ExternalLink, Maximize2, Play, X, Film } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { ArrowUpRight, Play, X } from 'lucide-react';
 
 export default function ProjectModal({
   selectedProject,
@@ -9,14 +9,10 @@ export default function ProjectModal({
 }) {
   const isOpen = Boolean(selectedProject || videoProject);
   const videoRef = useRef(null);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   // Close on Escape & lock body scroll
   useEffect(() => {
     if (!isOpen) return;
-    setIsVideoReady(false);
-    setIsPlaying(false);
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -37,9 +33,9 @@ export default function ProjectModal({
       videoRef.current.currentTime = 0;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
-        playPromise
-          .then(() => setIsPlaying(true))
-          .catch(() => {});
+        playPromise.catch(() => {
+          // Autoplay policy prevented automatic playback; controls remain available
+        });
       }
     }
   }, [videoProject]);
@@ -49,7 +45,7 @@ export default function ProjectModal({
   return (
     <div className="modal-backdrop" onClick={onClose} role="presentation">
       <div
-        className={`project-modal${videoProject ? ' project-modal--video' : ''}`}
+        className="project-modal"
         role="dialog"
         aria-modal="true"
         aria-label={
@@ -59,89 +55,48 @@ export default function ProjectModal({
         }
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           className="modal-close"
           onClick={onClose}
           aria-label="Fermer la modal"
           type="button"
         >
-          <X size={18} />
+          <X size={20} />
         </button>
 
         {videoProject ? (
-          /* ── VIDEO MODAL ── */
-          <div className="video-modal-layout">
+          <>
+            <p className="section-kicker">DÉMONSTRATION VIDÉO</p>
+            <h2>{videoProject.title}</h2>
 
-            {/* Left sidebar: metadata */}
-            <div className="video-modal-sidebar">
-              <span className="video-modal-eyebrow">
-                <Film size={12} />
-                DÉMONSTRATION
-              </span>
-
-              <h2 className="video-modal-title">{videoProject.title}</h2>
-
-              {videoProject.meta && (
-                <span className="video-modal-category">{videoProject.meta}</span>
-              )}
-
-              <div className="video-modal-divider" />
-
-              {videoProject.tags && videoProject.tags.length > 0 && (
-                <div className="video-modal-tags">
-                  <p className="video-modal-tags-label">STACK</p>
-                  <div className="tags tags--compact">
-                    {videoProject.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="video-modal-actions">
-                <a
-                  className="button button-quiet video-modal-open-btn"
-                  href={`/videos/${videoProject.video}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  title="Ouvrir en plein écran"
-                >
-                  <ExternalLink size={14} />
-                  Plein écran
-                </a>
-              </div>
+            <div className="video-wrapper">
+              <video
+                ref={videoRef}
+                className="project-video"
+                controls
+                autoPlay
+                playsInline
+                preload="metadata"
+                key={videoProject.video}
+                src={`/videos/${videoProject.video}`}
+              >
+                <source src={`/videos/${videoProject.video}`} type="video/mp4" />
+                Votre navigateur ne prend pas en charge la lecture de vidéos.
+              </video>
             </div>
 
-            {/* Right: video player */}
-            <div className="video-modal-player">
-              <div className="video-player-frame">
-                <div className={`video-ready-overlay${isVideoReady ? ' hidden' : ''}`}>
-                  <div className="video-spinner" />
-                </div>
-                <video
-                  ref={videoRef}
-                  className="project-video"
-                  controls
-                  autoPlay
-                  playsInline
-                  preload="metadata"
-                  key={videoProject.video}
-                  src={`/videos/${videoProject.video}`}
-                  onCanPlay={() => setIsVideoReady(true)}
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
-                >
-                  <source src={`/videos/${videoProject.video}`} type="video/mp4" />
-                </video>
-                {/* Coral accent bar under video */}
-                <div className="video-accent-bar" />
-              </div>
+            <div style={{ marginTop: '18px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <a
+                className="button button-quiet"
+                href={`/videos/${videoProject.video}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ouvrir dans un nouvel onglet <ArrowUpRight size={15} />
+              </a>
             </div>
-          </div>
-
+          </>
         ) : (
-          /* ── DETAILS MODAL ── */
           <>
             <p className="section-kicker">DÉTAILS DU PROJET</p>
             <h2>{selectedProject.title}</h2>
