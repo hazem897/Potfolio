@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { ArrowUpRight, Play, X } from 'lucide-react';
+import CustomVideoPlayer from './CustomVideoPlayer';
 
 export default function ProjectModal({
   selectedProject,
@@ -8,14 +9,14 @@ export default function ProjectModal({
   onSwitchToVideo
 }) {
   const isOpen = Boolean(selectedProject || videoProject);
-  const videoRef = useRef(null);
-  const [videoLoading, setVideoLoading] = useState(true);
 
   // Close on Escape & lock body scroll
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (e) => {
+      // If fullscreen is active, let browser exit fullscreen first
+      if (document.fullscreenElement) return;
       if (e.key === 'Escape') onClose();
     };
 
@@ -27,31 +28,6 @@ export default function ProjectModal({
       document.body.style.overflow = '';
     };
   }, [isOpen, onClose]);
-
-  // Autoplay video as soon as enough data is buffered
-  useEffect(() => {
-    if (videoProject && videoRef.current) {
-      setVideoLoading(true);
-      const v = videoRef.current;
-
-      const handleReady = () => {
-        setVideoLoading(false);
-        const playPromise = v.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // Autoplay policy prevented playback, controls remain active
-          });
-        }
-      };
-
-      if (v.readyState >= 3) {
-        handleReady();
-      } else {
-        v.addEventListener('canplay', handleReady, { once: true });
-        return () => v.removeEventListener('canplay', handleReady);
-      }
-    }
-  }, [videoProject]);
 
   if (!isOpen) return null;
 
@@ -86,31 +62,12 @@ export default function ProjectModal({
             <p className="section-kicker">DÉMONSTRATION VIDÉO</p>
             <h2>{videoProject.title}</h2>
 
-            <div className="video-wrapper">
-              <video
-                ref={videoRef}
-                className="project-video"
-                controls
-                autoPlay
-                playsInline
-                preload="auto"
-                poster={posterPath}
-                key={videoProject.video}
+            <div style={{ marginTop: '20px' }}>
+              <CustomVideoPlayer
                 src={`/videos/${videoProject.video}`}
-                onWaiting={() => setVideoLoading(true)}
-                onPlaying={() => setVideoLoading(false)}
-                onCanPlay={() => setVideoLoading(false)}
-                onLoadedData={() => setVideoLoading(false)}
-              >
-                Votre navigateur ne prend pas en charge la lecture de vidéos.
-              </video>
-
-              {videoLoading && (
-                <div className="video-loading-spinner-overlay" aria-live="polite">
-                  <div className="video-spinner-ring" />
-                  <span className="video-loading-text">Chargement instantané...</span>
-                </div>
-              )}
+                poster={posterPath}
+                title={videoProject.title}
+              />
             </div>
 
             <div style={{ marginTop: '18px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>

@@ -1,0 +1,660 @@
+/* ==========================================================================
+   PREMIUM CUSTOM VIDEO PLAYER (MODERN & MINIMALIST)
+   ========================================================================== */
+
+.cvp-container {
+  position: relative;
+  width: 100%;
+  max-height: 64vh;
+  aspect-ratio: 16 / 9;
+  background: #040811;
+  border-radius: var(--radius, 14px);
+  overflow: hidden;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(45, 212, 191, 0.15);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.cvp-container.cvp-hide-cursor {
+  cursor: none;
+}
+
+/* Video element */
+.cvp-video-element {
+  width: 100%;
+  height: 100%;
+  max-height: 64vh;
+  object-fit: contain;
+  background: #040811;
+  display: block;
+}
+
+/* Hide native controls across all browsers */
+.cvp-video-element::-webkit-media-controls {
+  display: none !important;
+}
+.cvp-video-element::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+/* ==========================================================================
+   FULLSCREEN MODE
+   ========================================================================== */
+.cvp-container:fullscreen,
+.cvp-container.cvp-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #000000;
+}
+
+.cvp-container:fullscreen .cvp-video-element,
+.cvp-container.cvp-fullscreen .cvp-video-element {
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   BUFFERING & LOADING OVERLAY
+   ========================================================================== */
+.cvp-buffering-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(4, 8, 17, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 10;
+  pointer-events: none;
+  animation: cvpFadeIn 0.25s ease;
+}
+
+.cvp-buffering-spinner {
+  width: 46px;
+  height: 46px;
+  border: 3px solid rgba(45, 212, 191, 0.2);
+  border-top-color: #2dd4bf;
+  border-radius: 50%;
+  animation: cvpSpin 0.75s linear infinite;
+  box-shadow: 0 0 16px rgba(45, 212, 191, 0.35);
+}
+
+.cvp-buffering-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: #a5f3fc;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes cvpSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cvpFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ==========================================================================
+   CENTER ACTION FLASH (RIPPLE FEEDBACK)
+   ========================================================================== */
+.cvp-center-flash {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.cvp-flash-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 80px;
+  min-height: 80px;
+  padding: 18px 24px;
+  background: rgba(8, 15, 29, 0.82);
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  border-radius: 50px;
+  color: #2dd4bf;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(45, 212, 191, 0.3);
+  animation: cvpPopFlash 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.cvp-flash-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+@keyframes cvpPopFlash {
+  0% {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+/* ==========================================================================
+   BIG INITIAL PLAY BUTTON
+   ========================================================================== */
+.cvp-big-play-btn {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(8, 15, 29, 0.88);
+  border: 1px solid rgba(45, 212, 191, 0.5);
+  color: #2dd4bf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 12;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(45, 212, 191, 0.25);
+  padding-left: 4px;
+}
+
+.cvp-big-play-btn:hover {
+  transform: scale(1.12);
+  background: #2dd4bf;
+  color: #040811;
+  border-color: #2dd4bf;
+  box-shadow: 0 14px 40px rgba(45, 212, 191, 0.65);
+}
+
+.cvp-big-play-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.3) 0%, transparent 70%);
+  z-index: -1;
+  animation: cvpPulseGlow 2.5s infinite;
+}
+
+@keyframes cvpPulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.15); }
+}
+
+/* ==========================================================================
+   TOP BAR (Fullscreen Title & Esc Hint)
+   ========================================================================== */
+.cvp-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(4, 8, 17, 0.85) 0%, transparent 100%);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  z-index: 14;
+}
+
+.cvp-top-bar.cvp-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cvp-title-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%;
+}
+
+.cvp-esc-hint {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   FLOATING DOCK CONTROLS BAR
+   ========================================================================== */
+.cvp-controls-bar {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  background: rgba(8, 15, 29, 0.88);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(45, 212, 191, 0.22);
+  border-radius: 14px;
+  padding: 10px 16px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.cvp-controls-bar.cvp-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* In fullscreen, space controls nicely */
+.cvp-container.cvp-fullscreen .cvp-controls-bar {
+  bottom: 24px;
+  left: 28px;
+  right: 28px;
+  padding: 12px 20px;
+}
+
+/* ==========================================================================
+   INTERACTIVE TIMELINE TRACK
+   ========================================================================== */
+.cvp-timeline-track-wrap {
+  position: relative;
+  width: 100%;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.cvp-timeline-rail {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  overflow: visible;
+  transition: height 0.18s ease;
+}
+
+.cvp-timeline-track-wrap:hover .cvp-timeline-rail {
+  height: 6px;
+}
+
+.cvp-timeline-buffered {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 4px;
+  transition: width 0.2s ease;
+  pointer-events: none;
+}
+
+.cvp-timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #2dd4bf 0%, #38bdf8 100%);
+  border-radius: 4px;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(45, 212, 191, 0.5);
+}
+
+.cvp-timeline-thumb {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #2dd4bf;
+  box-shadow: 0 0 10px rgba(45, 212, 191, 0.8), 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.cvp-timeline-track-wrap:hover .cvp-timeline-thumb {
+  transform: translateY(-50%) scale(1);
+}
+
+/* Hover time tooltip */
+.cvp-timeline-tooltip {
+  position: absolute;
+  bottom: 22px;
+  transform: translateX(-50%);
+  background: rgba(4, 8, 17, 0.95);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  color: #2dd4bf;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  z-index: 25;
+}
+
+/* ==========================================================================
+   CONTROLS ROW & BUTTONS
+   ========================================================================== */
+.cvp-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.cvp-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cvp-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Generic control button */
+.cvp-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.88);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  outline: none;
+}
+
+.cvp-btn:hover {
+  color: #2dd4bf;
+  background: rgba(45, 212, 191, 0.12);
+  transform: scale(1.08);
+}
+
+.cvp-btn:active {
+  transform: scale(0.94);
+}
+
+/* Play button special styling */
+.cvp-btn-play {
+  color: #2dd4bf;
+}
+
+.cvp-btn-play:hover {
+  background: rgba(45, 212, 191, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(45, 212, 191, 0.4);
+}
+
+/* 10s skip buttons */
+.cvp-btn-skip {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.cvp-btn-skip:hover {
+  color: #2dd4bf;
+}
+
+/* ==========================================================================
+   VOLUME CONTROL & EXPANDABLE SLIDER
+   ========================================================================== */
+.cvp-volume-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.cvp-volume-slider-wrap {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  display: flex;
+  align-items: center;
+}
+
+.cvp-volume-group:hover .cvp-volume-slider-wrap,
+.cvp-volume-group:focus-within .cvp-volume-slider-wrap {
+  width: 72px;
+  opacity: 1;
+  margin-left: 4px;
+}
+
+.cvp-volume-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  cursor: pointer;
+}
+
+.cvp-volume-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #2dd4bf;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
+  transition: transform 0.15s ease;
+}
+
+.cvp-volume-range::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+.cvp-volume-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #2dd4bf;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
+}
+
+/* ==========================================================================
+   TIME DISPLAY (CURRENT / DURATION)
+   ========================================================================== */
+.cvp-time-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0 6px;
+  user-select: none;
+}
+
+.cvp-time-current {
+  color: #2dd4bf;
+  font-weight: 600;
+}
+
+.cvp-time-sep {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.cvp-time-duration {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ==========================================================================
+   SPEED SELECTOR POPOVER
+   ========================================================================== */
+.cvp-speed-wrap {
+  position: relative;
+}
+
+.cvp-btn-speed {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  width: auto;
+  min-width: 38px;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+}
+
+.cvp-btn-speed.active,
+.cvp-btn-speed:hover {
+  border-color: #2dd4bf;
+  color: #2dd4bf;
+  background: rgba(45, 212, 191, 0.12);
+}
+
+.cvp-speed-popover {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  min-width: 140px;
+  background: rgba(6, 11, 20, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(45, 212, 191, 0.28);
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75), 0 0 20px rgba(45, 212, 191, 0.15);
+  animation: cvpSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 30;
+}
+
+@keyframes cvpSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cvp-speed-header {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 6px 10px 4px 10px;
+  font-weight: 600;
+}
+
+.cvp-speed-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 7px 10px;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.cvp-speed-item:hover {
+  background: rgba(45, 212, 191, 0.14);
+  color: #2dd4bf;
+}
+
+.cvp-speed-item.selected {
+  background: rgba(45, 212, 191, 0.18);
+  color: #2dd4bf;
+  font-weight: 700;
+}
+
+.cvp-speed-check {
+  color: #2dd4bf;
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE TWEAKS
+   ========================================================================== */
+@media (max-width: 640px) {
+  .cvp-container {
+    max-height: 50vh;
+  }
+  .cvp-controls-bar {
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    padding: 8px 12px;
+  }
+  .cvp-volume-slider-wrap {
+    display: none;
+  }
+  .cvp-time-duration {
+    display: none;
+  }
+  .cvp-time-sep {
+    display: none;
+  }
+  .cvp-btn {
+    width: 32px;
+    height: 32px;
+  }
+}
