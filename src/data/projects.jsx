@@ -31,7 +31,7 @@ export const projects = {
       meta: 'Projet personnel',
       description: "Développement d'une solution de Business Intelligence dédiée à la surveillance et à l'analyse des conditions météorologiques en Tunisie. Le projet transforme les données météorologiques en indicateurs interactifs afin de faciliter le suivi des conditions actuelles, l'analyse historique et l'étude des prévisions.",
       tags: ['Python', 'Power BI', 'DAX', 'Power Query'],
-      video: 'weather-Analytics.mp4',
+      video: 'Weather-Analytics.mp4',
       details: (
         <div className="project-details">
           <p>
@@ -378,7 +378,7 @@ export const projects = {
       meta: 'Projet personnel',
       description: "Développement d'une solution de Business Intelligence dédiée à la surveillance et à l'analyse des conditions météorologiques en Tunisie. Le projet transforme les données météorologiques en indicateurs interactifs afin de faciliter le suivi des conditions actuelles, l'analyse historique et l'étude des prévisions.",
       tags: ['Python', 'Power BI', 'DAX', 'Power Query'],
-      video: 'weather-Analytics.mp4',
+      video: 'Weather-Analytics.mp4',
       details: (
         <div className="project-details">
           <p>
