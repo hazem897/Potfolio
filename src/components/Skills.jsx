@@ -8,6 +8,57 @@ import {
   Sparkles
 } from 'lucide-react';
 import { skillGroups, skillLogos } from '../data/skills';
+import {
+  PythonIcon,
+  JavaScriptIcon,
+  TypeScriptIcon,
+  HTMLIcon,
+  CSSIcon,
+  ReactIcon,
+  NodeIcon,
+  GitIcon,
+  GitHubIcon,
+  DockerIcon,
+  PostgresIcon,
+  MysqlIcon,
+  PowerBiIcon,
+  ExcelIcon,
+  SqlIcon,
+  JavaIcon,
+  PhpIcon,
+  AngularIcon,
+  PandasIcon,
+  NumpyIcon,
+  TalendIcon
+} from './TechIcons';
+
+const techSvgIcons = {
+  Python: PythonIcon,
+  JavaScript: JavaScriptIcon,
+  TypeScript: TypeScriptIcon,
+  HTML: HTMLIcon,
+  CSS: CSSIcon,
+  'React.js': ReactIcon,
+  React: ReactIcon,
+  'Node.js': NodeIcon,
+  Node: NodeIcon,
+  Git: GitIcon,
+  GitHub: GitHubIcon,
+  Docker: DockerIcon,
+  PostgreSQL: PostgresIcon,
+  MySQL: MysqlIcon,
+  'Power BI': PowerBiIcon,
+  'Excel 2019 certifié': ExcelIcon,
+  Excel: ExcelIcon,
+  SQL: SqlIcon,
+  'SQL Server': SqlIcon,
+  Java: JavaIcon,
+  PHP: PhpIcon,
+  Angular: AngularIcon,
+  Pandas: PandasIcon,
+  NumPy: NumpyIcon,
+  Talend: TalendIcon
+};
 
 const fallbackIcons = {
   ETL: Workflow,
@@ -25,12 +76,7 @@ const languageMonograms = {
 };
 
 function SkillTile({ item, index, groupIndex }) {
-  const logoKey = Object.keys(skillLogos).find((key) => {
-    if (item === key) return true;
-    if (item.startsWith(key + ' ') || item.startsWith(key + '.')) return true;
-    return false;
-  }) || Object.keys(skillLogos).find((key) => item.startsWith(key));
-
+  const SvgComponent = techSvgIcons[item] || techSvgIcons[Object.keys(techSvgIcons).find((k) => item.startsWith(k))];
   const langInfo = languageMonograms[item];
   const FallbackIcon = fallbackIcons[item] || Sparkles;
   const delay = (groupIndex * 0.12 + index * 0.035).toFixed(3);
@@ -44,18 +90,14 @@ function SkillTile({ item, index, groupIndex }) {
       aria-label={item}
     >
       <div className="skill-tile-body">
-        {logoKey ? (
-          <img
-            src={skillLogos[logoKey]}
-            alt={item}
-            loading="lazy"
-          />
+        {SvgComponent ? (
+          <SvgComponent size={34} />
         ) : langInfo ? (
           <div className="skill-lang-monogram" style={{ color: langInfo.accent }}>
             <span>{langInfo.code}</span>
           </div>
         ) : (
-          <FallbackIcon size={24} className="skill-tile-icon-svg" />
+          <FallbackIcon size={26} className="skill-tile-icon-svg" />
         )}
       </div>
 
