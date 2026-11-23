@@ -50,11 +50,11 @@ export default function Hero() {
   return (
     <section className="hero" id="accueil">
       <div className="hero-copy">
-        <p className="eyebrow">PORTFOLIO · DATA &amp; BUSINESS INTELLIGENCE</p>
-        <h1>
-          Hazem<br />
-          <em>Khaled</em>
+        <p className="eyebrow">Hi, I'm</p>
+        <h1 className="hero-name">
+          Hazem Khaled
         </h1>
+        <div className="hero-underline-bar" />
 
         <div className="hero-typewriter" aria-label={`Spécialité : ${typedRole}`}>
           <span className="typewriter-text">{typedRole}</span>
@@ -66,10 +66,6 @@ export default function Hero() {
         </p>
 
         <div className="hero-actions">
-          <a className="button button-primary" href="#projets">
-            Explorer mes projets <ArrowUpRight size={17} />
-          </a>
-
           <a
             className="button button-cv"
             href="/CV_Hazem.pdf"
@@ -77,7 +73,11 @@ export default function Hero() {
             target="_blank"
             rel="noreferrer"
           >
-            <Download size={16} /> Télécharger CV
+            <Download size={16} /> Resume
+          </a>
+
+          <a className="button button-primary" href="#projets">
+            Explorer mes projets <ArrowUpRight size={17} />
           </a>
 
           <a
