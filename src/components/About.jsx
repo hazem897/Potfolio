@@ -45,7 +45,7 @@ function useCounter(target, duration = 1500) {
 
 export default function About() {
   const ref1 = useCounter('04');
-  const ref2 = useCounter('15');
+  const ref2 = useCounter('15+');
   const ref3 = useCounter('2026', 1800);
 
   return (

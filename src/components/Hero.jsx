@@ -17,51 +17,35 @@ function GitHubIcon() {
   );
 }
 
-const titles = [
-  'Business Intelligence Specialist',
-  'Data Analyst & Power BI Expert',
-  'Data Engineer & Python Developer',
-  'Solutions Décisionnelles & Big Data'
-];
+const TARGET_ROLE = 'Data Analyst & Power BI Expert';
 
-function useTypewriter(words, typingSpeed = 75, deletingSpeed = 40, pauseTime = 1800) {
+function useSingleTypewriter(targetText, speed = 55, startDelay = 250) {
   const [text, setText] = useState('');
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const currentWord = words[wordIndex % words.length];
-    let timer;
+    let index = 0;
+    setText('');
 
-    if (!isDeleting) {
-      if (text.length < currentWord.length) {
-        timer = setTimeout(() => {
-          setText(currentWord.slice(0, text.length + 1));
-        }, typingSpeed);
-      } else {
-        timer = setTimeout(() => {
-          setIsDeleting(true);
-        }, pauseTime);
-      }
-    } else {
-      if (text.length > 0) {
-        timer = setTimeout(() => {
-          setText(currentWord.slice(0, text.length - 1));
-        }, deletingSpeed);
-      } else {
-        setIsDeleting(false);
-        setWordIndex((prev) => (prev + 1) % words.length);
-      }
-    }
+    const startTimer = setTimeout(() => {
+      const interval = setInterval(() => {
+        index++;
+        setText(targetText.slice(0, index));
+        if (index >= targetText.length) {
+          clearInterval(interval);
+        }
+      }, speed);
 
-    return () => clearTimeout(timer);
-  }, [text, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseTime]);
+      return () => clearInterval(interval);
+    }, startDelay);
+
+    return () => clearTimeout(startTimer);
+  }, [targetText, speed, startDelay]);
 
   return text;
 }
 
 export default function Hero() {
-  const typedRole = useTypewriter(titles);
+  const typedRole = useSingleTypewriter(TARGET_ROLE);
 
   return (
     <section className="hero" id="accueil">

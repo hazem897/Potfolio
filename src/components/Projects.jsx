@@ -36,8 +36,8 @@ export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpe
         {visibleProjects.map((project, index) => (
           <article
             className={`project-card reveal${index === 0 ? ' featured' : ''}`}
-            key={project.title + index}
-            style={{ transitionDelay: `${index * 70}ms` }}
+            key={`${activeTab}-${project.title}-${index}`}
+            style={{ transitionDelay: `${index * 60}ms` }}
           >
             <div className="project-top">
               <span>0{index + 1}</span>
