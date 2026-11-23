@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { ArrowUpRight, Play, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, ExternalLink, Play, Maximize2, X } from 'lucide-react';
 
 export default function ProjectModal({
   selectedProject,
@@ -9,10 +9,14 @@ export default function ProjectModal({
 }) {
   const isOpen = Boolean(selectedProject || videoProject);
   const videoRef = useRef(null);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // Close on Escape & lock body scroll
   useEffect(() => {
     if (!isOpen) return;
+    setIsVideoReady(false);
+    setIsPlaying(false);
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -33,19 +37,27 @@ export default function ProjectModal({
       videoRef.current.currentTime = 0;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Autoplay policy prevented automatic playback; controls remain available
-        });
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch(() => {
+            // Autoplay policy prevented; controls still available
+          });
       }
     }
   }, [videoProject]);
 
   if (!isOpen) return null;
 
+  const isVideoMode = Boolean(videoProject);
+
   return (
-    <div className="modal-backdrop" onClick={onClose} role="presentation">
+    <div
+      className={`modal-backdrop${isVideoMode ? ' modal-backdrop--video' : ''}`}
+      onClick={onClose}
+      role="presentation"
+    >
       <div
-        className="project-modal"
+        className={`project-modal${isVideoMode ? ' project-modal--video' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label={
@@ -55,49 +67,77 @@ export default function ProjectModal({
         }
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Close button */}
         <button
           className="modal-close"
           onClick={onClose}
           aria-label="Fermer la modal"
           type="button"
         >
-          <X size={20} />
+          <X size={18} />
         </button>
 
-        {videoProject ? (
-          <>
-            <p className="section-kicker">DÉMONSTRATION VIDÉO</p>
-            <h2>{videoProject.title}</h2>
+        {isVideoMode ? (
+          <div className="video-modal-layout">
+            {/* Left sidebar — meta */}
+            <div className="video-modal-sidebar">
+              <span className="video-modal-eyebrow">
+                <span className="video-eyebrow-dot" />
+                Démonstration
+              </span>
 
-            <div className="video-wrapper">
-              <video
-                ref={videoRef}
-                className="project-video"
-                controls
-                autoPlay
-                playsInline
-                preload="metadata"
-                key={videoProject.video}
-                src={`/videos/${videoProject.video}`}
-              >
-                <source src={`/videos/${videoProject.video}`} type="video/mp4" />
-                Votre navigateur ne prend pas en charge la lecture de vidéos.
-              </video>
+              <h2 className="video-modal-title">{videoProject.title}</h2>
+
+              <div className="video-modal-tags">
+                {videoProject.tags?.map((tag) => (
+                  <span key={tag} className="video-modal-tag">{tag}</span>
+                ))}
+              </div>
+
+              <div className="video-modal-actions">
+                <a
+                  className="video-modal-open-btn"
+                  href={`/videos/${videoProject.video}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <ExternalLink size={14} />
+                  Plein écran
+                </a>
+              </div>
             </div>
 
-            <div style={{ marginTop: '18px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <a
-                className="button button-quiet"
-                href={`/videos/${videoProject.video}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Ouvrir dans un nouvel onglet <ArrowUpRight size={15} />
-              </a>
+            {/* Right — video player */}
+            <div className="video-modal-player">
+              <div className="video-player-frame">
+                <div className="video-player-glow" />
+                <video
+                  ref={videoRef}
+                  className="project-video"
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="metadata"
+                  key={videoProject.video}
+                  src={`/videos/${videoProject.video}`}
+                  onCanPlay={() => setIsVideoReady(true)}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                >
+                  <source src={`/videos/${videoProject.video}`} type="video/mp4" />
+                </video>
+
+                {!isVideoReady && (
+                  <div className="video-loading-overlay">
+                    <div className="video-loading-spinner" />
+                    <span>Chargement…</span>
+                  </div>
+                )}
+              </div>
             </div>
-          </>
+          </div>
         ) : (
-          <>
+          <div className="details-modal-layout">
             <p className="section-kicker">DÉTAILS DU PROJET</p>
             <h2>{selectedProject.title}</h2>
             <p className="project-modal-meta">{selectedProject.meta}</p>
@@ -123,7 +163,7 @@ export default function ProjectModal({
                 <Play size={15} /> Voir la vidéo
               </button>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>
