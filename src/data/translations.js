@@ -7,6 +7,7 @@ export const translations = {
       projets: 'Projets',
       competences: 'Compétences',
       certifications: 'Certifications',
+      contact: 'Contact',
       resume: 'Resume',
       englishCV: 'English CV',
       frenchCV: 'French CV'
@@ -156,6 +157,7 @@ export const translations = {
       successDesc: 'Merci pour votre message. Je vous répondrai dans les plus brefs délais (sous 24h).',
       sendAnother: 'Envoyer un autre message',
       errorMsg: "Une erreur s'est produite lors de l'envoi. Veuillez réessayer ou m'écrire directement par email.",
+      directEmailAction: "Cliquez ici pour m'envoyer un email direct.",
       copied: 'Copié !'
     },
     modal: {
@@ -173,6 +175,7 @@ export const translations = {
       projets: 'Projects',
       competences: 'Skills',
       certifications: 'Certifications',
+      contact: 'Contact',
       resume: 'Resume',
       englishCV: 'English CV',
       frenchCV: 'French CV'
@@ -322,6 +325,7 @@ export const translations = {
       successDesc: 'Thank you for reaching out. I will get back to you promptly within 24 hours.',
       sendAnother: 'Send another message',
       errorMsg: 'An error occurred while sending. Please try again or email me directly.',
+      directEmailAction: 'Click here to send me a direct email.',
       copied: 'Copied!'
     },
     modal: {
@@ -339,6 +343,7 @@ export const translations = {
       projets: 'المشاريع',
       competences: 'المهارات',
       certifications: 'الشهادات',
+      contact: 'تواصل معي',
       resume: 'السيرة الذاتية',
       englishCV: 'السيرة الذاتية بالإنجليزية',
       frenchCV: 'السيرة الذاتية بالفرنسية'
@@ -488,6 +493,7 @@ export const translations = {
       successDesc: 'شكراً لتواصلك، سأقوم بالرد عليك في أقرب وقت ممكن خلال 24 ساعة.',
       sendAnother: 'إرسال رسالة أخرى',
       errorMsg: 'حدث خطأ أثناء الإرسال. يرجى إعادة المحاولة أو مراسلتي عبر البريد الإلكتروني.',
+      directEmailAction: 'انقر هنا لإرسال بريد إلكتروني مباشر لي.',
       copied: 'تم النسخ!'
     },
     modal: {

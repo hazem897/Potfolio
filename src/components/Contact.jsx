@@ -92,7 +92,7 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Real email submission via Web3Forms with graceful fallback
+  // Real email submission via FormSubmit AJAX service
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -100,31 +100,35 @@ export default function Contact() {
     setStatus('submitting');
 
     try {
-      // Free Web3Forms delivery service endpoint
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('https://formsubmit.co/ajax/hazemhazem9089@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         },
         body: JSON.stringify({
-          access_key: 'ecc5e7c8-3e4b-4b2a-8d7d-5a9e3d9e4c1a', // Public web3forms portfolio submission key
           name: formData.name,
           email: formData.email,
-          subject: `[Portfolio Contact] ${formData.subject}`,
+          _subject: `[Portfolio] Nouveau message de ${formData.name} - ${formData.subject}`,
           message: formData.message,
-          from_name: formData.name,
-          replyto: formData.email
+          _captcha: 'false',
+          _template: 'table'
         })
       });
 
       const result = await response.json();
 
-      if (response.ok && result.success !== false) {
+      // FormSubmit returns success: "true", or on first activation returns a confirmation notice
+      const isOk =
+        response.ok &&
+        (result.success === 'true' ||
+          result.success === true ||
+          (result.message && result.message.toLowerCase().includes('activation')));
+
+      if (isOk) {
         setStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
-        // If web3forms rejects key or network issue, fallback to mailto trigger
         setStatus('error');
       }
     } catch {
@@ -351,10 +355,12 @@ export default function Contact() {
                     <a
                       href={`mailto:${contactEmail}?subject=${encodeURIComponent(
                         formData.subject || 'Contact Portfolio'
-                      )}&body=${encodeURIComponent(formData.message || '')}`}
-                      style={{ color: '#2dd4bf', textDecoration: 'underline' }}
+                      )}&body=${encodeURIComponent(
+                        `Nom: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+                      )}`}
+                      style={{ color: '#2dd4bf', textDecoration: 'underline', fontWeight: 600, display: 'inline-block', marginTop: '4px' }}
                     >
-                      Cliquez ici pour m'envoyer un email direct.
+                      {dict.contact.directEmailAction || "Cliquez ici pour m'envoyer un email direct."}
                     </a>
                   </div>
                 </div>

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Menu, X, Download, Globe, ChevronDown, Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-const NAV_IDS = ['accueil', 'profil', 'experience', 'projets', 'competences', 'certifications'];
+const NAV_IDS = ['accueil', 'profil', 'experience', 'projets', 'competences', 'certifications', 'contact'];
 
 const LANGUAGES = [
   { code: 'fr', label: 'Français', flag: '🇫🇷', short: 'FR' },
@@ -15,6 +15,7 @@ export default function Navbar({ menuOpen, setMenuOpen }) {
   const [scrolled, setScrolled] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [resumeMenuOpen, setResumeMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('accueil');
 
   const langRef = useRef(null);
   const resumeRef = useRef(null);
@@ -24,6 +25,27 @@ export default function Navbar({ menuOpen, setMenuOpen }) {
     setLangMenuOpen(false);
     setResumeMenuOpen(false);
   };
+
+  // Track active section on scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-15% 0px -55% 0px' }
+    );
+
+    NAV_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   // Scroll detection
   useEffect(() => {
@@ -57,7 +79,12 @@ export default function Navbar({ menuOpen, setMenuOpen }) {
       {/* Navigation links */}
       <nav className={menuOpen ? 'nav open' : 'nav'}>
         {NAV_IDS.map((id) => (
-          <a key={id} href={`#${id}`} onClick={closeMenu}>
+          <a
+            key={id}
+            href={`#${id}`}
+            className={activeSection === id ? 'active' : ''}
+            onClick={closeMenu}
+          >
             {dict.nav[id] || id}
           </a>
         ))}
