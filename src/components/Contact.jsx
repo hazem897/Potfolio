@@ -14,6 +14,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { emailConfig } from '../config/emailConfig';
 import '../assets/styles/contact.css';
 
 function LinkedInIcon() {
@@ -92,46 +93,91 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Real email submission via FormSubmit AJAX service
+  // Real email submission with custom template support (EmailJS + FormSubmit)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     setStatus('submitting');
 
-    try {
-      const response = await fetch('https://formsubmit.co/ajax/hazemhazem9089@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          _subject: `[Portfolio] Nouveau message de ${formData.name} - ${formData.subject}`,
-          message: formData.message,
-          _captcha: 'false',
-          _template: 'table'
-        })
-      });
+    const formattedDate = new Date().toLocaleString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZoneName: 'short'
+    });
 
-      const result = await response.json();
+    let sentSuccessfully = false;
 
-      // FormSubmit returns success: "true", or on first activation returns a confirmation notice
-      const isOk =
-        response.ok &&
-        (result.success === 'true' ||
-          result.success === true ||
-          (result.message && result.message.toLowerCase().includes('activation')));
+    // 1. Try EmailJS if configured (delivers the custom Dark Navy & Turquoise HTML design)
+    if (emailConfig.serviceId && emailConfig.templateId && emailConfig.publicKey) {
+      try {
+        const emailJsRes = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            service_id: emailConfig.serviceId,
+            template_id: emailConfig.templateId,
+            user_id: emailConfig.publicKey,
+            template_params: {
+              from_name: formData.name,
+              from_email: formData.email,
+              subject: formData.subject,
+              message: formData.message,
+              submitted_at: formattedDate
+            }
+          })
+        });
 
-      if (isOk) {
-        setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        setStatus('error');
+        if (emailJsRes.ok) {
+          sentSuccessfully = true;
+        }
+      } catch (err) {
+        console.warn('EmailJS attempt failed, falling back to FormSubmit:', err);
       }
-    } catch {
+    }
+
+    // 2. Fallback to FormSubmit (already active & delivers box card layout)
+    if (!sentSuccessfully) {
+      try {
+        const response = await fetch(`https://formsubmit.co/ajax/${emailConfig.formSubmitEmail}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: `New Portfolio Message | Hazem Khaled`,
+            "🧑‍💼 Full Name": formData.name,
+            "✉️ Email Address": formData.email,
+            "🏷️ Subject": formData.subject,
+            "📅 Submitted At": formattedDate,
+            "💬 Message Content": formData.message,
+            _captcha: 'false',
+            _template: 'box'
+          })
+        });
+
+        const result = await response.json();
+        sentSuccessfully =
+          response.ok &&
+          (result.success === 'true' ||
+            result.success === true ||
+            (result.message && result.message.toLowerCase().includes('activation')));
+      } catch {
+        sentSuccessfully = false;
+      }
+    }
+
+    if (sentSuccessfully) {
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } else {
       setStatus('error');
     }
   };
