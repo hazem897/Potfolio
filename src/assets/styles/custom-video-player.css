@@ -636,25 +636,72 @@
    ========================================================================== */
 @media (max-width: 640px) {
   .cvp-container {
-    max-height: 50vh;
+    max-height: 54vh;
+    border-radius: 8px;
   }
+
   .cvp-controls-bar {
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
-    padding: 8px 12px;
+    bottom: 6px;
+    left: 6px;
+    right: 6px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    gap: 8px;
   }
+
   .cvp-volume-slider-wrap {
     display: none;
   }
+
   .cvp-time-duration {
     display: none;
   }
+
   .cvp-time-sep {
     display: none;
   }
+
+  .cvp-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .cvp-center-play {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cvp-speed-menu {
+    bottom: 46px;
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 380px) {
+  .cvp-controls-bar {
+    gap: 4px;
+    padding: 4px 6px;
+  }
+
   .cvp-btn {
     width: 32px;
     height: 32px;
+    min-width: 32px;
+  }
+
+  .cvp-time-display {
+    font-size: 0.68rem;
+    padding: 0 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cvp-controls-bar,
+  .cvp-center-play,
+  .cvp-timeline-progress,
+  .cvp-timeline-thumb {
+    transition: none !important;
+    animation: none !important;
   }
 }

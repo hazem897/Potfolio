@@ -390,14 +390,116 @@
 }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVE TWEAKS
+   RESPONSIVE TWEAKS (TABLET & SMARTPHONES)
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .certifications-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 22px;
   }
+
+  .cert-card {
+    padding: 20px 18px;
+  }
+
+  .cert-actions {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .cert-btn-primary,
+  .cert-btn-secondary {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+
+  .cert-lightbox-backdrop {
+    padding: 14px;
+  }
+
   .cert-lightbox-modal {
-    padding: 20px;
+    width: 95vw;
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cert-card {
+    padding: 16px 14px;
+  }
+
+  .cert-title {
+    font-size: 1.12rem;
+    margin-bottom: 6px;
+  }
+
+  .cert-desc {
+    font-size: 0.85rem;
+  }
+
+  .cert-lightbox-modal {
+    padding: 16px 12px;
+    max-height: 92vh;
+  }
+
+  .cert-lightbox-header h2 {
+    font-size: 1.18rem;
+    line-height: 1.25;
+  }
+
+  .cert-lightbox-meta {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    font-size: 0.72rem;
+  }
+
+  .cert-lightbox-close {
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .cert-lightbox-footer {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .cert-lightbox-footer a,
+  .cert-lightbox-footer button {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .cert-card {
+    padding: 14px 10px;
+  }
+
+  .cert-top {
+    margin-bottom: 12px;
+  }
+
+  .cert-actions {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-card,
+  .cert-card::after,
+  .cert-card::before,
+  .cert-thumbnail,
+  .cert-lightbox-modal {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
   }
 }

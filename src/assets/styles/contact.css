@@ -419,21 +419,113 @@
 }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVE LAYOUT
+   RESPONSIVE LAYOUT (TABLET & SMARTPHONES)
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .contact-section {
-    padding: 70px 20px;
+    padding: 64px 18px;
   }
+
   .contact-layout {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 24px;
   }
+
   .contact-form-row {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
+
   .contact-info-card,
   .contact-form-card {
-    padding: 28px 22px;
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 56px 14px;
+  }
+
+  .contact-info-card,
+  .contact-form-card {
+    padding: 20px 14px;
+    border-radius: 12px;
+  }
+
+  .contact-info-header h3 {
+    font-size: 1.15rem;
+  }
+
+  .contact-info-header p {
+    font-size: 0.85rem;
+  }
+
+  .contact-detail-item {
+    padding: 12px 10px;
+    min-height: 48px;
+  }
+
+  .contact-detail-value {
+    font-size: 0.84rem;
+    word-break: break-all;
+  }
+
+  .contact-copy-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .contact-social-row {
+    gap: 8px;
+  }
+
+  .contact-social-pill {
+    min-height: 44px;
+    padding: 10px 10px;
+    font-size: 0.74rem;
+  }
+
+  /* 16px font-size prevents iOS automatic zoom on form input focus */
+  .form-input,
+  .form-textarea {
+    font-size: 16px;
+    padding: 12px 12px;
+  }
+
+  .form-label {
+    font-size: 0.72rem;
+  }
+
+  .contact-submit-btn {
+    min-height: 48px;
+    font-size: 0.84rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-info-card,
+  .contact-form-card {
+    padding: 16px 10px;
+  }
+
+  .contact-social-row {
+    flex-direction: column;
+  }
+
+  .contact-social-pill {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-info-card,
+  .contact-form-card,
+  .contact-submit-btn,
+  .contact-social-pill,
+  .pulse-dot {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
   }
 }

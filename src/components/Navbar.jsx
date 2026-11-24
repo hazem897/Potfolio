@@ -26,6 +26,23 @@ export default function Navbar({ menuOpen, setMenuOpen }) {
     setResumeMenuOpen(false);
   };
 
+  // Handle body scroll lock and escape key when mobile menu is open
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    if (menuOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.classList.add('menu-open-lock');
+    } else {
+      document.body.classList.remove('menu-open-lock');
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.classList.remove('menu-open-lock');
+    };
+  }, [menuOpen]);
+
   // Track active section on scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -71,71 +88,127 @@ export default function Navbar({ menuOpen, setMenuOpen }) {
   const currentLangObj = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
 
   return (
-    <header className={`topbar${scrolled ? ' scrolled' : ''}`}>
-      <a className="brand" href="#accueil" onClick={closeMenu}>
-        <span className="brand-bracket">&lt;&nbsp;</span>HK<span className="brand-bracket">&nbsp;/&gt;</span>
-      </a>
+    <>
+      {/* Mobile background blur overlay */}
+      <div
+        className={`nav-backdrop ${menuOpen ? 'open' : ''}`}
+        onClick={closeMenu}
+        aria-hidden="true"
+      />
 
-      {/* Navigation links */}
-      <nav className={menuOpen ? 'nav open' : 'nav'}>
-        {NAV_IDS.map((id) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className={activeSection === id ? 'active' : ''}
-            onClick={closeMenu}
-          >
-            {dict.nav[id] || id}
-          </a>
-        ))}
+      <header className={`topbar${scrolled ? ' scrolled' : ''}`}>
+        <a className="brand" href="#accueil" onClick={closeMenu}>
+          <span className="brand-bracket">&lt;&nbsp;</span>HK<span className="brand-bracket">&nbsp;/&gt;</span>
+        </a>
 
-        {/* Mobile-only language & resume buttons */}
-        <div className="nav-mobile-extras mobile-only">
-          <div className="nav-mobile-lang-row">
-            {LANGUAGES.map((l) => (
-              <button
-                key={l.code}
-                type="button"
-                className={`mobile-lang-pill ${lang === l.code ? 'active' : ''}`}
-                onClick={() => {
-                  setLang(l.code);
-                  closeMenu();
-                }}
+        {/* Navigation links */}
+        <nav
+          id="mobile-nav"
+          className={menuOpen ? 'nav open' : 'nav'}
+          aria-label="Navigation principale"
+        >
+          <div className="nav-links-wrap">
+            {NAV_IDS.map((id) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                className={`nav-link ${activeSection === id ? 'active' : ''}`}
+                onClick={closeMenu}
               >
-                <span>{l.flag}</span> {l.short}
-              </button>
+                <span className="nav-link-dot" aria-hidden="true" />
+                <span>{dict.nav[id] || id}</span>
+              </a>
             ))}
           </div>
 
-          <div className="nav-mobile-resume-row">
-            <a
-              className="nav-mobile-resume-link"
-              href="/CV_Hazem_EN.pdf"
-              download="CV_Hazem_Khaled_EN.pdf"
-              target="_blank"
-              rel="noreferrer"
-              onClick={closeMenu}
-            >
-              <Download size={14} /> 🇺🇸 English CV
-            </a>
-            <a
-              className="nav-mobile-resume-link"
-              href="/CV_Hazem_FR.pdf"
-              download="CV_Hazem_Khaled_FR.pdf"
-              target="_blank"
-              rel="noreferrer"
-              onClick={closeMenu}
-            >
-              <Download size={14} /> 🇫🇷 French CV
-            </a>
-          </div>
-        </div>
-      </nav>
+          {/* Mobile-only language & resume buttons */}
+          <div className="nav-mobile-extras mobile-only">
+            <div className="nav-mobile-section-title">
+              <span>Langue / Language</span>
+            </div>
+            <div className="nav-mobile-lang-row">
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.code}
+                  type="button"
+                  className={`mobile-lang-pill ${lang === l.code ? 'active' : ''}`}
+                  onClick={() => {
+                    setLang(l.code);
+                    closeMenu();
+                  }}
+                  aria-label={`Changer en ${l.label}`}
+                >
+                  <span className="mobile-lang-flag">{l.flag}</span>
+                  <span className="mobile-lang-name">{l.label}</span>
+                  <span className="mobile-lang-short">({l.short})</span>
+                </button>
+              ))}
+            </div>
 
-      {/* Desktop action buttons */}
-      <div className="nav-actions">
-        {/* Language selector pill dropdown */}
-        <div className="nav-dropdown-wrap desktop-only" ref={langRef}>
+            <div className="nav-mobile-section-title" style={{ marginTop: '16px' }}>
+              <span>Curriculum Vitae</span>
+            </div>
+            <div className="nav-mobile-resume-row">
+              <a
+                className="nav-mobile-resume-link"
+                href="/CV_Hazem_EN.pdf"
+                download="CV_Hazem_Khaled_EN.pdf"
+                target="_blank"
+                rel="noreferrer"
+                onClick={closeMenu}
+              >
+                <div className="nav-mobile-resume-left">
+                  <span className="nav-mobile-resume-flag">🇺🇸</span>
+                  <div className="nav-mobile-resume-meta">
+                    <strong>English CV</strong>
+                    <small>PDF · 2026</small>
+                  </div>
+                </div>
+                <div className="nav-mobile-resume-action">
+                  <Download size={15} />
+                </div>
+              </a>
+              <a
+                className="nav-mobile-resume-link"
+                href="/CV_Hazem_FR.pdf"
+                download="CV_Hazem_Khaled_FR.pdf"
+                target="_blank"
+                rel="noreferrer"
+                onClick={closeMenu}
+              >
+                <div className="nav-mobile-resume-left">
+                  <span className="nav-mobile-resume-flag">🇫🇷</span>
+                  <div className="nav-mobile-resume-meta">
+                    <strong>French CV</strong>
+                    <small>PDF · 2026</small>
+                  </div>
+                </div>
+                <div className="nav-mobile-resume-action">
+                  <Download size={15} />
+                </div>
+              </a>
+            </div>
+          </div>
+        </nav>
+
+        {/* Desktop action buttons */}
+        <div className="nav-actions">
+          {/* Quick language toggle for mobile/tablet right in topbar */}
+          <button
+            type="button"
+            className="topbar-quick-lang mobile-only"
+            onClick={() => {
+              const nextIndex = (LANGUAGES.findIndex((l) => l.code === lang) + 1) % LANGUAGES.length;
+              setLang(LANGUAGES[nextIndex].code);
+            }}
+            aria-label={`Langue actuelle : ${currentLangObj.label}. Cliquer pour changer.`}
+          >
+            <span>{currentLangObj.flag}</span>
+            <span>{currentLangObj.short}</span>
+          </button>
+
+          {/* Language selector pill dropdown */}
+          <div className="nav-dropdown-wrap desktop-only" ref={langRef}>
           <button
             type="button"
             className="nav-lang-btn"
@@ -232,14 +305,16 @@ export default function Navbar({ menuOpen, setMenuOpen }) {
 
         {/* Mobile Hamburger toggle */}
         <button
-          className="menu-toggle"
+          className={`menu-toggle ${menuOpen ? 'open' : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-label={menuOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'}
           aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
         >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          {menuOpen ? <X size={22} className="menu-icon-spin" /> : <Menu size={22} />}
         </button>
       </div>
     </header>
-  );
+  </>
+);
 }
