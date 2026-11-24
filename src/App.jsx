@@ -6,6 +6,7 @@ import About from './components/About';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
+import Certifications from './components/Certifications';
 import Education from './components/Education';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
@@ -56,6 +57,7 @@ export default function App() {
           onOpenVideo={handleOpenVideo}
         />
         <Skills />
+        <Certifications />
         <Education />
       </main>
 

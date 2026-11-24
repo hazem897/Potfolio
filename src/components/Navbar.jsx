@@ -6,7 +6,8 @@ const navLinks = [
   ['profil', 'Profil'],
   ['experience', 'Expérience'],
   ['projets', 'Projets'],
-  ['competences', 'Compétences']
+  ['competences', 'Compétences'],
+  ['certifications', 'Certifications']
 ];
 
 export default function Navbar({ menuOpen, setMenuOpen }) {
