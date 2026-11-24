@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { LanguageProvider } from './context/LanguageContext';
 import ScrollProgress from './components/ScrollProgress';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -8,6 +9,7 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Certifications from './components/Certifications';
 import Education from './components/Education';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
 import useScrollReveal from './hooks/useScrollReveal';
@@ -42,7 +44,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <LanguageProvider>
       <ScrollProgress />
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
@@ -59,6 +61,7 @@ export default function App() {
         <Skills />
         <Certifications />
         <Education />
+        <Contact />
       </main>
 
       <Footer />
@@ -69,6 +72,6 @@ export default function App() {
         onClose={handleCloseModals}
         onSwitchToVideo={handleSwitchToVideo}
       />
-    </>
+    </LanguageProvider>
   );
 }

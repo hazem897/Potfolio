@@ -1,24 +1,28 @@
 import { GraduationCap, Award, BookOpen } from 'lucide-react';
 import { educationList } from '../data/education';
+import { useLanguage } from '../context/LanguageContext';
 
 const eduIcons = [GraduationCap, Award, BookOpen];
 
 export default function Education() {
+  const { dict } = useLanguage();
+  const items = dict.education.items || educationList;
+
   return (
     <section className="education section" id="formation">
       <div className="education-copy reveal-left">
-        <div className="section-kicker">FORMATION ACADÉMIQUE</div>
+        <div className="section-kicker">{dict.education.kicker}</div>
         <h2>
-          Construire le socle<br />
-          <em>pour aller plus loin.</em>
+          {dict.education.titleLine1}<br />
+          <em>{dict.education.titleLine2}</em>
         </h2>
         <p className="education-lead">
-          Un parcours structuré alliant rigueur mathématique, ingénierie informatique et spécialisation décisionnelle.
+          {dict.education.lead}
         </p>
       </div>
 
       <div className="education-list reveal-stagger">
-        {educationList.map((item, index) => {
+        {items.map((item, index) => {
           const Icon = eduIcons[index] || GraduationCap;
           return (
             <div

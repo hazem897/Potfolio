@@ -1,4 +1,5 @@
 import { FileText, Mail, Phone } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 function GitHubIcon() {
   return (
@@ -9,7 +10,11 @@ function GitHubIcon() {
 }
 
 export default function Footer() {
+  const { lang, dict } = useLanguage();
   const currentYear = new Date().getFullYear();
+
+  const cvHref = lang === 'en' ? '/CV_Hazem_EN.pdf' : '/CV_Hazem_FR.pdf';
+  const cvDownload = lang === 'en' ? 'CV_Hazem_Khaled_EN.pdf' : 'CV_Hazem_Khaled_FR.pdf';
 
   return (
     <footer>
@@ -17,17 +22,17 @@ export default function Footer() {
         <a className="brand" href="#accueil">
           HK<span>.</span>
         </a>
-        <p>Data Analyst Junior · Business Intelligence</p>
+        <p>Data Analyst · Business Intelligence</p>
       </div>
 
       <div className="footer-links">
         <a
-          href="/CV_Hazem.pdf"
-          download="CV_Hazem_Khaled.pdf"
+          href={cvHref}
+          download={cvDownload}
           target="_blank"
           rel="noreferrer"
         >
-          <FileText size={16} /> Mon CV
+          <FileText size={16} /> {dict.hero.resumeBtn}
         </a>
         <a
           href="https://www.linkedin.com/in/hazem-khaled-data/"
@@ -47,11 +52,9 @@ export default function Footer() {
           <Mail size={16} /> Email
         </a>
         <a href="tel:+21652416031">
-          <Phone size={16} /> Téléphone
+          <Phone size={16} /> +216 52 416 031
         </a>
       </div>
-
-      <small>© {currentYear} Hazem Khaled</small>
     </footer>
   );
 }

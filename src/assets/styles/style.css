@@ -146,30 +146,258 @@ button {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
+.nav-dropdown-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Language selector pill (matches user screenshot 1) */
+.nav-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(14, 25, 44, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: #ffffff;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(10px);
+}
+
+.nav-lang-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+  background: rgba(45, 212, 191, 0.12);
+  box-shadow: 0 0 15px rgba(45, 212, 191, 0.3);
+  transform: translateY(-1px);
+}
+
+.nav-lang-code {
+  font-weight: 800;
+}
+
+.nav-lang-globe {
+  color: var(--coral);
+}
+
+/* Resume button with dropdown chevron (matches user screenshot 2) */
 .nav-resume-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   font-family: 'DM Mono', monospace;
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--coral);
-  background: transparent;
+  background: rgba(45, 212, 191, 0.06);
   border: 1.5px solid var(--coral);
   padding: 7px 16px;
-  border-radius: 6px;
+  border-radius: 8px;
   letter-spacing: 0.04em;
-  transition: background var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-.nav-resume-btn:hover {
+.nav-resume-btn:hover,
+.nav-resume-btn.open {
   background: var(--coral);
   color: #080f1d;
-  box-shadow: 0 4px 18px rgba(45, 212, 191, 0.4);
+  box-shadow: 0 4px 18px rgba(45, 212, 191, 0.45);
   transform: translateY(-2px);
+}
+
+.nav-chevron {
+  transition: transform 0.25s ease;
+}
+
+.nav-chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* Floating Glass Dropdown Popover */
+.nav-dropdown-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 185px;
+  background: #080f1d;
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(45, 212, 191, 0.15);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  animation: navPopDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes navPopDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nav-dropdown-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 6px 10px 4px 10px;
+  font-weight: 700;
+}
+
+.nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.nav-dropdown-item:hover {
+  background: rgba(45, 212, 191, 0.14);
+  color: #2dd4bf;
+  transform: translateX(2px);
+}
+
+.nav-dropdown-item.selected {
+  background: rgba(45, 212, 191, 0.18);
+  color: #2dd4bf;
+  font-weight: 700;
+}
+
+.nav-dropdown-item-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item-flag {
+  font-size: 1rem;
+}
+
+.nav-item-name {
+  font-weight: 600;
+}
+
+.nav-item-code {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.nav-item-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(45, 212, 191, 0.15);
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.3);
+}
+
+.nav-check-icon {
+  color: #2dd4bf;
+}
+
+/* Mobile extras */
+.nav-mobile-extras {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 18px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.nav-mobile-lang-row {
+  display: flex;
+  gap: 8px;
+}
+
+.mobile-lang-pill {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.mobile-lang-pill.active {
+  background: rgba(45, 212, 191, 0.2);
+  border-color: #2dd4bf;
+  color: #2dd4bf;
+  font-weight: 700;
+}
+
+.nav-mobile-resume-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-mobile-resume-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(45, 212, 191, 0.1);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  color: #2dd4bf;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* RTL (Arabic) body typography adjustment */
+body.lang-ar {
+  font-family: 'Cairo', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body.lang-ar .hero-lead,
+body.lang-ar .about-text-lead,
+body.lang-ar .about-quote-text,
+body.lang-ar .experience-content-card p,
+body.lang-ar .project-card p,
+body.lang-ar .cert-description {
+  line-height: 1.8;
 }
 
 .desktop-only {

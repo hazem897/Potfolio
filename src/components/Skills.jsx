@@ -8,6 +8,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { skillGroups, skillLogos } from '../data/skills';
+import { useLanguage } from '../context/LanguageContext';
 
 const fallbackIcons = {
   ETL: Workflow,
@@ -66,35 +67,40 @@ function SkillTile({ item, index, groupIndex }) {
 }
 
 export default function Skills() {
+  const { dict } = useLanguage();
+
   return (
     <section className="skills section" id="competences">
-      <div className="section-kicker reveal">04 — EXPERTISE</div>
+      <div className="section-kicker reveal">{dict.skills.kicker}</div>
       <div className="section-heading reveal">
-        <h2>Compétences &amp; Technologies</h2>
-        <p>Une boîte à outils pensée pour passer de la donnée brute à l'insight et aux applications décisionnelles.</p>
+        <h2>{dict.skills.title}</h2>
+        <p>{dict.skills.subtitle}</p>
       </div>
 
       <div className="skills-container reveal">
-        {skillGroups.map(([title, items], groupIndex) => (
-          <div className="skills-category-block" key={title}>
-            <div className="skills-category-header">
-              <span className="skills-category-prefix">//</span>
-              <span className="skills-category-title">{title.toUpperCase()}</span>
-              <span className="skills-category-badge">{items.length}</span>
-            </div>
+        {skillGroups.map(([title, items], groupIndex) => {
+          const translatedTitle = dict.skills.categories[title] || title;
+          return (
+            <div className="skills-category-block" key={title}>
+              <div className="skills-category-header">
+                <span className="skills-category-prefix">//</span>
+                <span className="skills-category-title">{translatedTitle.toUpperCase()}</span>
+                <span className="skills-category-badge">{items.length}</span>
+              </div>
 
-            <div className="skills-tiles-row">
-              {items.map((item, itemIndex) => (
-                <SkillTile
-                  item={item}
-                  key={item}
-                  index={itemIndex}
-                  groupIndex={groupIndex}
-                />
-              ))}
+              <div className="skills-tiles-row">
+                {items.map((item, itemIndex) => (
+                  <SkillTile
+                    item={item}
+                    key={item}
+                    index={itemIndex}
+                    groupIndex={groupIndex}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { ArrowUpRight, Play, X } from 'lucide-react';
 import CustomVideoPlayer from './CustomVideoPlayer';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ProjectModal({
   selectedProject,
@@ -8,6 +9,7 @@ export default function ProjectModal({
   onClose,
   onSwitchToVideo
 }) {
+  const { dict } = useLanguage();
   const isOpen = Boolean(selectedProject || videoProject);
 
   // Close on Escape & lock body scroll
@@ -59,7 +61,7 @@ export default function ProjectModal({
 
         {videoProject ? (
           <>
-            <p className="section-kicker">DÉMONSTRATION VIDÉO</p>
+            <p className="section-kicker">{dict.modal.videoKicker}</p>
             <h2>{videoProject.title}</h2>
 
             <div style={{ marginTop: '20px' }}>
@@ -77,13 +79,13 @@ export default function ProjectModal({
                 target="_blank"
                 rel="noreferrer"
               >
-                Ouvrir dans un nouvel onglet <ArrowUpRight size={15} />
+                {dict.modal.openTab} <ArrowUpRight size={15} />
               </a>
             </div>
           </>
         ) : (
           <>
-            <p className="section-kicker">DÉTAILS DU PROJET</p>
+            <p className="section-kicker">{dict.modal.detailsKicker}</p>
             <h2>{selectedProject.title}</h2>
             <p className="project-modal-meta">{selectedProject.meta}</p>
 
@@ -105,7 +107,7 @@ export default function ProjectModal({
                 onClick={() => onSwitchToVideo(selectedProject)}
                 type="button"
               >
-                <Play size={15} /> Voir la vidéo
+                <Play size={15} /> {dict.projects.watchVideo}
               </button>
             )}
           </>

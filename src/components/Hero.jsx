@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { ArrowUpRight, Download, Mail, MapPin } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 function LinkedInIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.65 1.65 0 0 0-1.66 1.65 1.65 1.65 0 0 0 1.66 1.65 1.66 1.66 0 0 0 1.66-1.65Z" />
+      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.65 1.65 0 0 0-1.66 1.65 1.65 1.65 0 0 0 1.66 1.65 1.66 1.65 0 0 0 1.66-1.65Z" />
     </svg>
   );
 }
@@ -17,14 +18,12 @@ function GitHubIcon() {
   );
 }
 
-const TARGET_ROLE = 'Data Analyst & Power BI Expert';
-
 /**
  * Cyclic typewriter: types out text, pauses for 3 seconds,
  * deletes, and re-types continuously every 3 seconds.
  */
 function useCyclicTypewriter(
-  targetText = TARGET_ROLE,
+  targetText = 'Data Analyst & Power BI Expert',
   typingSpeed = 50,
   pauseDuration = 3000,
   deletingSpeed = 22
@@ -41,7 +40,6 @@ function useCyclicTypewriter(
           setText(targetText.slice(0, text.length + 1));
         }, typingSpeed);
       } else {
-        // Full text reached: pause for 3 seconds as requested
         timer = setTimeout(() => {
           setIsDeleting(true);
         }, pauseDuration);
@@ -52,7 +50,6 @@ function useCyclicTypewriter(
           setText(targetText.slice(0, text.length - 1));
         }, deletingSpeed);
       } else {
-        // Fully erased: brief pause then re-type
         timer = setTimeout(() => {
           setIsDeleting(false);
         }, 350);
@@ -66,12 +63,16 @@ function useCyclicTypewriter(
 }
 
 export default function Hero() {
-  const typedRole = useCyclicTypewriter(TARGET_ROLE, 50, 3000, 22);
+  const { lang, dict } = useLanguage();
+  const typedRole = useCyclicTypewriter(dict.hero.role, 50, 3000, 22);
+
+  const cvHref = lang === 'en' ? '/CV_Hazem_EN.pdf' : '/CV_Hazem_FR.pdf';
+  const cvDownload = lang === 'en' ? 'CV_Hazem_Khaled_EN.pdf' : 'CV_Hazem_Khaled_FR.pdf';
 
   return (
     <section className="hero" id="accueil">
       <div className="hero-copy">
-        <p className="eyebrow">Hi, I'm</p>
+        <p className="eyebrow">{dict.hero.greeting}</p>
         <h1 className="hero-name">
           Hazem Khaled
         </h1>
@@ -83,22 +84,22 @@ export default function Hero() {
         </div>
 
         <p className="hero-lead">
-          Je transforme les données complexes en décisions claires et en produits utiles.
+          {dict.hero.lead}
         </p>
 
         <div className="hero-actions">
           <a
             className="button button-cv"
-            href="/CV_Hazem.pdf"
-            download="CV_Hazem_Khaled.pdf"
+            href={cvHref}
+            download={cvDownload}
             target="_blank"
             rel="noreferrer"
           >
-            <Download size={16} /> Resume
+            <Download size={16} /> {dict.hero.resumeBtn}
           </a>
 
           <a className="button button-primary" href="#projets">
-            Explorer mes projets <ArrowUpRight size={17} />
+            {dict.hero.exploreBtn} <ArrowUpRight size={17} />
           </a>
 
           <a
@@ -121,14 +122,14 @@ export default function Hero() {
             <GitHubIcon /> GitHub
           </a>
 
-          <a className="button button-quiet" href="mailto:hazemhazem9089@gmail.com">
-            <Mail size={16} /> Me contacter
+          <a className="button button-quiet" href="#contact">
+            <Mail size={16} /> {dict.hero.contactBtn}
           </a>
         </div>
 
         <div className="contact-row">
           <span>
-            <MapPin size={15} /> Médenine, Tunisie
+            <MapPin size={15} /> {dict.hero.location}
           </span>
           <span>
             <Mail size={15} /> hazemhazem9089@gmail.com
@@ -138,11 +139,13 @@ export default function Hero() {
 
       <div className="hero-visual">
         <div className="portrait-frame">
-          <img src="/Image/Hazem.png" alt="Portrait de Hazem Khaled" />
-        </div>
-
-        <div className="hero-index">
-          01 <span>/ 04</span>
+          <div className="portrait-rotating-border" aria-hidden="true" />
+          <img
+            src="/Image/Hazem.png"
+            alt="Portrait de Hazem Khaled"
+            className="portrait-img"
+            loading="eager"
+          />
         </div>
       </div>
     </section>

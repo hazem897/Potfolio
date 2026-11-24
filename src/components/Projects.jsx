@@ -1,12 +1,7 @@
 import { useEffect } from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
 import { projects } from '../data/projects';
-
-const tabs = [
-  ['data', 'Data'],
-  ['academiques', 'Académiques'],
-  ['personnels', 'Personnels']
-];
+import { useLanguage } from '../context/LanguageContext';
 
 // In-memory set to ensure each video/poster is prefetched only once per session
 const prefetchedUrls = new Set();
@@ -34,7 +29,14 @@ function prefetchVideoResource(videoName) {
 }
 
 export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpenVideo }) {
+  const { dict } = useLanguage();
   const visibleProjects = projects[activeTab] ?? projects.data;
+
+  const tabs = [
+    ['data', dict.projects.tabs.data || 'Data'],
+    ['academiques', dict.projects.tabs.academiques || 'Académiques'],
+    ['personnels', dict.projects.tabs.personnels || 'Personnels']
+  ];
 
   // Preload poster images on mount so they are cached in advance
   useEffect(() => {
@@ -48,10 +50,10 @@ export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpe
 
   return (
     <section className="projects section" id="projets">
-      <div className="section-kicker reveal">03 — SÉLECTION</div>
+      <div className="section-kicker reveal">{dict.projects.kicker}</div>
       <div className="section-heading reveal">
-        <h2>Projets</h2>
-        <p>Quelques cas où la donnée devient une histoire compréhensible.</p>
+        <h2>{dict.projects.title}</h2>
+        <p>{dict.projects.subtitle}</p>
       </div>
 
       <div className="tabs reveal" role="tablist">
@@ -95,7 +97,7 @@ export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpe
                 onClick={() => onOpenDetails(project)}
                 type="button"
               >
-                Voir plus <ArrowUpRight size={15} />
+                {dict.projects.seeMore} <ArrowUpRight size={15} />
               </button>
               {project.video && (
                 <button
@@ -106,7 +108,7 @@ export default function Projects({ activeTab, setActiveTab, onOpenDetails, onOpe
                   onFocus={() => prefetchVideoResource(project.video)}
                   type="button"
                 >
-                  <Play size={14} /> Voir la vidéo
+                  <Play size={14} /> {dict.projects.watchVideo}
                 </button>
               )}
             </div>

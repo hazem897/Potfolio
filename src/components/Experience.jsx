@@ -1,16 +1,20 @@
 import { experiences } from '../data/experiences';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Experience() {
+  const { dict } = useLanguage();
+  const items = dict.experience.items || experiences;
+
   return (
     <section className="experience section" id="experience">
-      <div className="section-kicker reveal">02 — PARCOURS</div>
+      <div className="section-kicker reveal">{dict.experience.kicker}</div>
       <div className="section-heading reveal">
-        <h2>Expérience</h2>
-        <p>Des missions à l'intersection de la donnée, du produit et du métier.</p>
+        <h2>{dict.experience.title}</h2>
+        <p>{dict.experience.subtitle}</p>
       </div>
 
       <div className="experience-list">
-        {experiences.map((item, index) => (
+        {items.map((item, index) => (
           <article
             className="experience-item reveal"
             key={item.company + index}

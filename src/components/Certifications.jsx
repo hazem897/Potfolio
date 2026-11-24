@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Award, ExternalLink, Eye, X, CheckCircle2, Calendar, MapPin, ZoomIn } from 'lucide-react';
 import { certificationsList } from '../data/certifications';
+import { useLanguage } from '../context/LanguageContext';
 import '../assets/styles/certifications.css';
 
 export default function Certifications() {
+  const { dict } = useLanguage();
   const [activeCert, setActiveCert] = useState(null);
 
   // Close lightbox on Escape & lock body scroll
@@ -25,12 +27,10 @@ export default function Certifications() {
 
   return (
     <section className="certifications section" id="certifications">
-      <div className="section-kicker reveal">05 — CERTIFICATIONS</div>
+      <div className="section-kicker reveal">{dict.certifications.kicker}</div>
       <div className="section-heading reveal">
-        <h2>Certifications &amp; Attestations</h2>
-        <p>
-          Reconnaissances officielles et validations méthodologiques attestant de mes compétences techniques et professionnelles.
-        </p>
+        <h2>{dict.certifications.title}</h2>
+        <p>{dict.certifications.subtitle}</p>
       </div>
 
       <div className="certifications-grid">
@@ -94,7 +94,7 @@ export default function Certifications() {
 
               {cert.credentialId && (
                 <div className="cert-credential-box">
-                  <span className="cert-credential-label">ID VÉRIFICATION :</span>
+                  <span className="cert-credential-label">{dict.certifications.credentialLabel}</span>
                   <span className="cert-credential-id">{cert.credentialId}</span>
                 </div>
               )}
@@ -125,7 +125,7 @@ export default function Certifications() {
                   className="button button-primary cert-view-btn"
                   onClick={() => setActiveCert(cert)}
                 >
-                  <Eye size={15} /> Voir le certificat
+                  <Eye size={15} /> {dict.certifications.viewBtn}
                 </button>
 
                 {cert.verifyUrl && (
@@ -135,7 +135,7 @@ export default function Certifications() {
                     rel="noreferrer"
                     className="button button-quiet cert-verify-btn"
                   >
-                    Vérifier (Certiport) <ExternalLink size={14} />
+                    {dict.certifications.verifyBtn} <ExternalLink size={14} />
                   </a>
                 )}
               </div>
@@ -168,7 +168,7 @@ export default function Certifications() {
             </button>
 
             <div className="cert-lightbox-header">
-              <span className="section-kicker">CERTIFICAT OFFICIEL</span>
+              <span className="section-kicker">{dict.certifications.modalKicker}</span>
               <h2>{activeCert.title}</h2>
               <div className="cert-lightbox-meta">
                 <span>{activeCert.issuer}</span>
@@ -198,7 +198,7 @@ export default function Certifications() {
                 rel="noreferrer"
                 className="button button-quiet"
               >
-                Ouvrir l'image originale <ExternalLink size={14} />
+                {dict.certifications.originalBtn} <ExternalLink size={14} />
               </a>
 
               {activeCert.verifyUrl && (
@@ -208,7 +208,7 @@ export default function Certifications() {
                   rel="noreferrer"
                   className="button button-primary"
                 >
-                  Vérifier sur Certiport.com <ExternalLink size={15} />
+                  {dict.certifications.verifyExternalBtn} <ExternalLink size={15} />
                 </a>
               )}
             </div>
