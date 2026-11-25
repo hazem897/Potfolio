@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { emailConfig } from '../config/emailConfig';
+import { useVisitorTracker } from '../hooks/useVisitorTracker';
 import '../assets/styles/contact.css';
 
 function LinkedInIcon() {
@@ -35,6 +36,7 @@ function GitHubIcon() {
 
 export default function Contact() {
   const { dict } = useLanguage();
+  const { associateContact } = useVisitorTracker();
 
   // Form fields state
   const [formData, setFormData] = useState({
@@ -176,6 +178,8 @@ export default function Contact() {
 
     if (sentSuccessfully) {
       setStatus('success');
+      // Voluntarily associate name and email with the current visitor session
+      associateContact(formData);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } else {
       setStatus('error');

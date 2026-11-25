@@ -1,4 +1,4 @@
-import { FileText, Mail, Phone } from 'lucide-react';
+import { FileText, Mail, Phone, Lock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 function GitHubIcon() {
@@ -9,7 +9,7 @@ function GitHubIcon() {
   );
 }
 
-export default function Footer() {
+export default function Footer({ onOpenAdmin }) {
   const { lang, dict } = useLanguage();
   const currentYear = new Date().getFullYear();
 
@@ -53,6 +53,19 @@ export default function Footer() {
         </a>
         <a href="tel:+21652416031">
           <Phone size={16} /> +216 52 416 031
+        </a>
+        <a
+          href="#admin"
+          onClick={(e) => {
+            e.preventDefault();
+            if (onOpenAdmin) onOpenAdmin();
+            else window.location.hash = '#admin';
+          }}
+          className="footer-admin-link"
+          title="Portail Administrateur & Analytics"
+          aria-label="Portail Administrateur"
+        >
+          <Lock size={12} /> <span>Admin</span>
         </a>
       </div>
     </footer>

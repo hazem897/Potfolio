@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import ScrollProgress from './components/ScrollProgress';
 import Navbar from './components/Navbar';
@@ -12,7 +12,9 @@ import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
+import AdminDashboard from './components/AdminDashboard';
 import useScrollReveal from './hooks/useScrollReveal';
+import { useVisitorTracker } from './hooks/useVisitorTracker';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,6 +24,34 @@ export default function App() {
 
   // Activate scroll-reveal animations
   useScrollReveal();
+
+  // Activate real-time visitor tracking & session heartbeats
+  useVisitorTracker();
+
+  // Admin dashboard route & hash detection (/admin or #admin)
+  const [adminOpen, setAdminOpen] = useState(() => {
+    return (
+      typeof window !== 'undefined' &&
+      (window.location.pathname === '/admin' || window.location.hash === '#admin')
+    );
+  });
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#admin' || window.location.pathname === '/admin') {
+        setAdminOpen(true);
+      }
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  const handleCloseAdmin = useCallback(() => {
+    setAdminOpen(false);
+    if (window.location.hash === '#admin') {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+  }, []);
 
   const handleCloseModals = useCallback(() => {
     setSelectedProject(null);
@@ -64,7 +94,7 @@ export default function App() {
         <Contact />
       </main>
 
-      <Footer />
+      <Footer onOpenAdmin={() => setAdminOpen(true)} />
 
       <ProjectModal
         selectedProject={selectedProject}
@@ -72,6 +102,8 @@ export default function App() {
         onClose={handleCloseModals}
         onSwitchToVideo={handleSwitchToVideo}
       />
+
+      <AdminDashboard isOpen={adminOpen} onClose={handleCloseAdmin} />
     </LanguageProvider>
   );
 }
